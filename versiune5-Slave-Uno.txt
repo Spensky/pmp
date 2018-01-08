@@ -1,0 +1,235 @@
+// Includem biblioteca necesara pentru I2C
+#include <Wire.h>
+#include <Servo.h>
+#include "queue.h"
+
+//Pinii motor 1
+#define mpin00 5
+#define mpin01 6
+
+//Pinii motor 2
+#define mpin10 3
+#define mpin11 11
+
+#define trigger 9
+#define echo 10
+//#define trigger 10
+//#define echo 8
+
+Queue<int> queue(100);
+
+int j=0;
+volatile int servoNumber = 8;
+unsigned long t1;
+unsigned long t2;
+unsigned pulse_width;
+long duration;
+int distance;
+const unsigned int MAX_DIST = 23200;
+Servo srv;
+int positionServo = 0;
+boolean inainte = false;
+int x = 0;
+int currentMillis =0;
+int previousMillis = 0;
+int interval = 300;
+
+
+void setup() {
+
+ // Pornim busul I2C ca si slave la adresa 9
+ Serial.begin(9600);
+  pinMode(trigger, OUTPUT);
+  pinMode(echo, INPUT);
+
+  digitalWrite(mpin00, 0);
+  digitalWrite(mpin01, 0);
+  digitalWrite(mpin10, 0);
+  digitalWrite(mpin11, 0);
+ 
+  pinMode (mpin00, OUTPUT);
+  pinMode (mpin01, OUTPUT);
+  pinMode (mpin10, OUTPUT);
+  pinMode (mpin11, OUTPUT);
+ 
+  // pin LED
+  pinMode(13, OUTPUT);
+
+
+ Wire.begin(9);
+ // Atasam o functie care sa se declanseze atunci cand primim ceva
+ Wire.onReceive(receiveEvent);
+ Serial.println("slave");
+}
+
+void receiveEvent(int bytes) {
+ x = Wire.read(); // citim un character din I2C
+   queue.push(x);
+}
+
+
+
+// Functie pentru controlul unui motor
+// Intrare: pinii m1 si m2, directia si viteza
+void StartMotor (int m1, int m2, int forward, int speed)
+{
+   
+  if (speed==0) // oprire
+  {
+    digitalWrite(m1, 0);
+    digitalWrite(m2, 0);
+  }
+  else
+  {
+    if (forward)
+    {
+       digitalWrite(m2, 0);
+       analogWrite (m1, speed); // folosire PWM
+    }
+    else
+    {
+      digitalWrite(m1, 0);
+      analogWrite(m2, speed);
+  }
+ }
+ srv.write(90);
+}
+
+// Functie de siguranta
+// Executa oprire motoare, urmata de delay
+void delayStopped(int ms)
+{
+  StartMotor (mpin00, mpin01, 0, 0);
+  StartMotor (mpin10, mpin11, 0, 0);
+  delay(ms);
+}
+// Utilizare servo
+// Pozitionare in trei unghiuri
+// La final, ramane in mijloc (90 grade)
+
+void servo_move1(){
+  srv.attach(servoNumber);
+  srv.write(queue.pop());
+  delay(300);
+  srv.detach();
+}
+
+void servo_move(int val)
+{
+   Serial.println(val);
+  srv.attach(servoNumber);
+  srv.write(val);
+  delay(100);
+  srv.detach();
+  //Serial.println("Servo: ");
+  //Serial.println(val);
+ // delay(1000);
+}
+
+void move_down(){
+  
+    StartMotor (mpin00, mpin01, 1, 128);
+    StartMotor (mpin10, mpin11, 1, 128);
+    delay(400);
+    delayStopped(100);
+    
+
+    //Serial.print("down");
+
+}
+
+void move_up(){
+  
+  StartMotor (mpin00, mpin01, 0, 128);
+  StartMotor (mpin10, mpin11, 0, 128);
+  delay(200);
+  delayStopped(100);
+  
+
+  //Serial.print("up");
+}
+
+ 
+void move_left(){
+  
+  StartMotor (mpin00, mpin01, 0, 128);
+  StartMotor (mpin10, mpin11, 1, 128);
+  delay(400);
+  delayStopped(300);
+  
+
+  //Serial.print("left");
+}
+
+ 
+void move_right(){
+  
+  StartMotor (mpin00, mpin01, 1, 128);
+  StartMotor (mpin10, mpin11, 0, 128);
+  delay(400);
+  delayStopped(300);
+  
+  //Serial.print("right");
+}
+
+
+
+void move_head_in_front(){
+  srv.attach(servoNumber);
+  srv.write(90);
+  delay(1000);
+  srv.detach();
+}
+
+void loop() {
+ 
+  //Serial.println(x);
+  //delay(300);
+  //servo_move1();
+   currentMillis = millis();
+      if(currentMillis - previousMillis > interval){
+        int c = queue.pop();
+       // int c2 = queue.pop();
+        //Serial.println(c);
+        //(c !=0 && c2 != 0){
+            computeLogic(c);
+            Serial.print(c);
+          //}
+        //Serial.println(x);
+        previousMillis = currentMillis;
+         
+      }
+ 
+  //move_head_in_front();
+}
+
+void computeLogic(int x){
+  switch(x) {
+   case 1:
+      move_down();
+      break;
+   case 2:
+      move_up();
+      break;
+   case 3:
+      move_left();
+      break;
+   case 4:
+      move_right();
+      break;
+   case 6:
+      srv.detach();
+      break;
+   case 7:
+      srv.attach(servoNumber);
+      break;
+   case 8:
+      delayStopped(300);
+      break;
+   default :
+        servo_move(x);
+      //Serial.println(x);
+      //servo_move1();
+      break;
+  }
+}

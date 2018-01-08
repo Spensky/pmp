@@ -1,0 +1,248 @@
+
+#include <Servo.h>
+
+//Pinii motor 1
+#define mpin00 5
+#define mpin01 6
+
+//Pinii motor 2
+#define mpin10 3
+#define mpin11 11
+
+//#define trigger 9
+//#define echo 10
+#define trigger 10
+#define echo 8
+int j=0;
+unsigned long t1;
+unsigned long t2;
+unsigned pulse_width;
+long duration;
+int distance;
+const unsigned int MAX_DIST = 23200;
+Servo srv;
+int positionServo = 0;
+boolean inainte = false;
+int harta[30][18];//U D R L
+void setup() {
+  
+  Serial.begin(9600);
+  pinMode(trigger, OUTPUT);
+  pinMode(echo, INPUT);
+
+  digitalWrite(mpin00, 0);
+  digitalWrite(mpin01, 0);
+  digitalWrite(mpin10, 0);
+  digitalWrite(mpin11, 0);
+  
+  pinMode (mpin00, OUTPUT);
+  pinMode (mpin01, OUTPUT);
+  pinMode (mpin10, OUTPUT);
+  pinMode (mpin11, OUTPUT);
+  
+  // pin LED
+  pinMode(13, OUTPUT);
+
+  move_down();
+ 
+}
+
+// Functie pentru controlul unui motor
+// Intrare: pinii m1 si m2, directia si viteza
+void StartMotor (int m1, int m2, int forward, int speed)
+{
+   
+  if (speed==0) // oprire
+  {
+    digitalWrite(m1, 0); 
+    digitalWrite(m2, 0);
+  }
+  else
+  {
+    if (forward)
+    {
+       digitalWrite(m2, 0);
+       analogWrite (m1, speed); // folosire PWM
+    }
+    else
+    {
+      digitalWrite(m1, 0);
+      analogWrite(m2, speed);
+  }
+ }
+ srv.write(90);
+}
+
+// Functie de siguranta
+// Executa oprire motoare, urmata de delay
+void delayStopped(int ms)
+{
+  StartMotor (mpin00, mpin01, 0, 0);
+  StartMotor (mpin10, mpin11, 0, 0);
+  delay(ms);
+}
+// Utilizare servo
+// Pozitionare in trei unghiuri
+// La final, ramane in mijloc (90 grade)
+void playWithServo(int pin)
+{
+  srv.attach(pin);
+  srv.write(0);
+  delay(1000);
+  srv.write(180);
+  delay(1000);
+  srv.write(90);
+  delay(1000);
+  srv.detach();
+} 
+
+void move_down(){
+    StartMotor (mpin00, mpin01, 1, 128);
+    StartMotor (mpin10, mpin11, 1, 128); 
+    delay(400);
+    delayStopped(100); 
+
+}
+
+void move_up(){
+  StartMotor (mpin00, mpin01, 0, 128);
+  StartMotor (mpin10, mpin11, 0, 128);
+  delay(200);
+  delayStopped(100);
+}
+
+ 
+void move_left(){
+  StartMotor (mpin00, mpin01, 0, 128);
+  StartMotor (mpin10, mpin11, 1, 128);
+  delay(400);
+  delayStopped(300);
+}
+
+ 
+void move_right(){
+  StartMotor (mpin00, mpin01, 1, 128); 
+  StartMotor (mpin10, mpin11, 0, 128);
+  delay(400);
+  delayStopped(300);
+}
+
+int checkRight(){
+  srv.attach(8);
+  srv.write(50);
+  delay(500);
+  distanta();
+  delay(50);
+  int dist = distance;
+  delay(100);
+  srv.detach();
+  return dist;
+}
+
+int checkLeft(){
+  srv.attach(8);
+  srv.write(170);
+  delay(500);
+  distanta();
+  delay(50);
+  int dist = distance;
+  delay(100);
+   srv.detach();
+  return dist;
+}
+
+void move_head_in_front(){
+  srv.attach(8);
+  srv.write(90);
+  delay(1000);
+  srv.detach();
+}
+
+void logic_of_movement(int distanceRight,int distanceLeft){
+  if(distance >= 20){
+      move_up();
+      mapare();
+  }
+  else{
+     delayStopped(300);
+      move_down();
+      distanceRight = checkRight();
+      delay(100);
+      distanceLeft = checkLeft();
+      delay(100);
+
+      if(distance >= distanceLeft){
+          move_right();
+          //delayStopped(300);
+      }
+      else{
+          move_left();
+          //delayStopped(300);
+      }
+  }
+}
+
+void loop() {  
+ 
+  int distanceRight = 0;
+  int distanceLeft = 0;
+
+  for(int i=0; i<30; i++){
+       for(int j=0; i<18; i++){
+          Serial.print(harta[i][j] +" ");
+       }
+       Serial.println();
+  }
+  
+  move_head_in_front();
+  distanta();
+  logic_of_movement(distanceRight,distanceLeft);
+} 
+
+void mapare(){
+        srv.attach(8);
+       //directie[0]=0;
+       for(int i =0; i<=180; i+=20){
+        srv.write(i);
+        delay(100);
+        distanta();
+        harta[j][i/20]=distance;
+        Serial.print("Harta ");
+        Serial.print(j);
+        Serial.print(" ");
+        Serial.print(i/20);
+        Serial.print("->");
+        Serial.print(harta[j][i/20]);
+        Serial.print("\t");
+       }
+       srv.detach();
+       if(j > 30){
+        j = 0;
+       }else{
+        j++;
+       }
+       delay(300);
+}
+ 
+void distanta(){
+ 
+  digitalWrite(trigger,HIGH);
+  delay(10);
+  digitalWrite(trigger,LOW);
+  
+  while ( digitalRead(echo) == 0 );
+  t1 = micros();
+  while (digitalRead(echo) == 1);
+  t2 = micros();
+  pulse_width = t2 - t1;
+  distance = pulse_width/58.0;
+  
+  if ( pulse_width > MAX_DIST ) {
+    //Serial.println("Out of range");
+  } 
+  else {
+   // Serial.print(distance);
+   // Serial.println("cm");
+  }
+  delay(10);
+}

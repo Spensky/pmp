@@ -1,0 +1,334 @@
+#include <SoftwareSerial.h>
+#include <Servo.h>
+#include <Wire.h>
+#define DEBUG true 
+//Pinii motor 1
+#define mpin00 4
+#define mpin01 7
+
+//Pinii motor 2
+#define mpin10 3
+#define mpin11 11
+const byte rxPin = 18;
+const byte txPin = 19;
+//#define trigger 9
+//#define echo 10
+#define trigger 10
+#define echo 8
+int j=0;
+int i =0;
+volatile int servoNumber = 9;
+unsigned long t1;
+unsigned long t2;
+unsigned pulse_width;
+long duration;
+int distance;
+const unsigned int MAX_DIST = 23200;
+Servo srv;
+int positionServo = 0;
+boolean inainte = false;
+boolean nuTransmite=false;
+int harta[10][18];//U D R L
+//SoftwareSerial Serial1 (rxPin, txPin);
+void setup() {
+  Serial.begin(115200);
+  Serial1.begin(115200); 
+  Wire.begin();
+ 
+  pinMode(LED_BUILTIN, OUTPUT); 
+  digitalWrite(LED_BUILTIN, LOW); 
+  sendData("AT+RST\r\n", 2000, false); // resetare modul 
+  sendData("AT+CWMODE=2\r\n", 1000, false); // configurare ca access point 
+  sendData("AT+CIFSR\r\n", 1000, DEBUG); // citeste adresa IP 
+  sendData("AT+CWSAP?\r\n", 2000, DEBUG); // citeste informatia SSID (nume retea) 
+  sendData("AT+CIPMUX=1\r\n", 1000, false); // configurare conexiuni multiple 
+  sendData("AT+CIPSERVER=1,80\r\n", 1000, false); // pornire server pe port 80 
+  //Serial.println("master");
+  pinMode(trigger, OUTPUT);
+  pinMode(echo, INPUT);
+
+  digitalWrite(mpin00, 0);
+  digitalWrite(mpin01, 0);
+  digitalWrite(mpin10, 0);
+  digitalWrite(mpin11, 0);
+ 
+  pinMode (mpin00, OUTPUT);
+  pinMode (mpin01, OUTPUT);
+  pinMode (mpin10, OUTPUT);
+  pinMode (mpin11, OUTPUT);
+ 
+  // pin LED
+  pinMode(13, OUTPUT);
+
+ 
+}
+
+void mapare(){
+       //directie[0]=0;
+       for(int j =0; j<=180; j+=20){
+        nuTransmite = false;
+        move_servo(j);
+        delay(300);
+        distanta();
+        harta[i][j/20] = distance;
+//        Serial.print("Harta ");
+//        Serial.print(j);
+//        Serial.print(" ");
+//        Serial.print(i/20);
+//        Serial.print("->");
+ //       Serial.println(harta[i][j/20]);
+//        Serial.print("\t");
+       }
+       nuTransmite= true;
+       if(i > 10){
+        j = 0;
+       }else{
+        i++;
+       }
+       //delay(300);
+}
+
+void distanta(){
+ 
+  digitalWrite(trigger,HIGH);
+  delay(10);
+  digitalWrite(trigger,LOW);
+ 
+  while ( digitalRead(echo) == 0 );
+  t1 = micros();
+  while (digitalRead(echo) == 1);
+  t2 = micros();
+  pulse_width = t2 - t1;
+  distance = pulse_width/58.0;
+ 
+  if ( pulse_width > MAX_DIST ) {
+    //distance = MAX_DIST/58.0;
+   // Serial.println("Out of range");
+  }
+  else {
+    //Serial.print(distance);
+   // Serial.println("cm");
+  }
+  delay(10);
+}
+
+void move_down(){
+ 
+ Wire.beginTransmission(9); // transmitem spre device #9
+ Wire.write(1); // trimitem x
+ Wire.endTransmission(); // oprim transmisia
+
+}
+
+void move_up(){
+ 
+ Wire.beginTransmission(9); // transmitem spre device #9
+ Wire.write(2); // trimitem x
+ Wire.endTransmission(); // oprim transmisia
+}
+
+ 
+void move_left(){
+ 
+ Wire.beginTransmission(9); // transmitem spre device #9
+ Wire.write(3); // trimitem x
+ Wire.endTransmission(); // oprim transmisia
+}
+
+ 
+void move_right(){
+ 
+ Wire.beginTransmission(9); // transmitem spre device #9
+ Wire.write(4); // trimitem x
+ Wire.endTransmission(); // oprim transmisia
+}
+
+void move_servo(int directie){
+  if(!nuTransmite){
+   Wire.beginTransmission(9); // transmitem spre device #9
+   Wire.write(directie); // trimitem x
+   Wire.endTransmission(); // oprim transmisia
+  }
+}
+
+void detach_servo(){ 
+ Wire.beginTransmission(9); // transmitem spre device #9
+ Wire.write(6); // trimitem x
+ Wire.endTransmission(); // oprim transmisia
+}
+
+void attach_servo(){
+  Wire.beginTransmission(9); // transmitem spre device #9
+ Wire.write(7); // trimitem x
+ Wire.endTransmission(); // oprim transmisia
+}
+
+void delayStopped(){
+ Wire.beginTransmission(9); // transmitem spre device #9
+ Wire.write(8); // trimitem x
+ Wire.endTransmission(); // oprim transmisia
+}
+
+int checkRight(){
+  move_servo(50);
+  delay(500);
+  distanta();
+  delay(50);
+  int dist = distance;
+  delay(100);
+  return dist;
+}
+
+int checkLeft(){
+  move_servo(170);
+  delay(500);
+  distanta();
+  delay(50);
+  int dist = distance;
+  delay(100);
+  return dist;
+}
+
+void move_head_in_front(){
+  move_servo(90);
+  delay(1000);
+}
+
+void logic_of_movement(int distanceRight,int distanceLeft){
+  if(distance >= 20){
+      move_up();
+      mapare();
+  }
+  else{
+      delayStopped();
+      move_down();
+      distanceRight = checkRight();
+      delay(100);
+      distanceLeft = checkLeft();
+      delay(100);
+
+      if(distance >= distanceLeft){
+          move_right();
+          //delayStopped(300);
+      }
+      else{
+          move_left();
+          //delayStopped(300);
+      }
+  }
+}
+
+void citire(){
+   for(int i=0; i<10; i++){
+       for(int j=0; j<=9; j++){
+          if(harta[i][j] > 40){
+            Serial.print("_"); 
+          }else{
+            Serial.print("X");
+          }
+          //Serial.print(harta[i][j]);
+          Serial.print(" ");
+       }
+      Serial.println();
+    } 
+}
+
+String sendData(String command, const int timeout, boolean debug) { 
+  String response = ""; 
+  Serial1.print(command); // trimite comanda la esp8266   
+  long int time = millis(); 
+  while ((time + timeout) > millis()) { 
+    while (Serial1.available()) { 
+      char c = Serial1.read(); // citeste caracter urmator 
+      response += c; 
+    } 
+  } 
+  if (response.indexOf("/l0") != -1) { 
+    digitalWrite(LED_BUILTIN, HIGH); 
+  } 
+  if (response.indexOf("/l1") != -1) { 
+    digitalWrite(LED_BUILTIN, LOW); 
+  } 
+  if (debug) { 
+    Serial.print(response); 
+  } 
+  return response; 
+} 
+unsigned long readSensor() { 
+  return millis(); 
+} 
+
+void citire2(){
+
+   if (Serial1.available()) { 
+    if (Serial1.find("+IPD,")) { 
+      delay(500); 
+      int connectionId = Serial1.read() - 48; // functia read() returneaza valori zecimale ASCII 
+      // si caracterul ‘0’ are codul ASCII 48 
+      String webpage = "<h1>Harta de vizualizare!</h1>"; 
+      String cipSend = "AT+CIPSEND="; 
+      cipSend += connectionId; 
+      cipSend += ","; 
+
+      //harta[0][0] = 39;
+      //harta[0][1] = 40;
+      //harta[1][0] = 41;
+      //harta[1][1] = 42;
+      for(int i=0; i<10; i++){
+        webpage += "<p>"; 
+       for(int j=0; j<9; j++){
+          if(harta[i][j] > 40){
+            //Serial.print("_");
+             //webpage += i; 
+             // webpage += "  ";   
+            // webpage += j;  
+             webpage += "_";  
+          }else{
+             // webpage += i; 
+             // webpage += "  ";   
+            // webpage += j;  
+             webpage += "X"; 
+            //Serial.print("X");
+          }
+          //Serial.print(harta[i][j]);
+           //webpage += harta[i][j];
+            webpage += " ";  
+          //Serial.print(" ");
+       }
+        webpage += "</p>"; 
+      //Serial.println();
+      } 
+
+      cipSend += webpage.length(); 
+      cipSend += "\r\n"; 
+      sendData(cipSend, 100, DEBUG); 
+      sendData(webpage, 150, DEBUG); 
+      String closeCommand = "AT+CIPCLOSE="; 
+      closeCommand += connectionId; //se adauga identificatorul conexiunii 
+      closeCommand += "\r\n"; 
+      sendData(closeCommand, 300, DEBUG); 
+  }
+ 
+  }
+  
+}
+
+void loop() {  
+  int distanceRight = 0;
+  int distanceLeft = 0;
+
+   //citire();
+   
+ // logic_of_movement(distanceRight,distanceLeft);
+  for(int i=0; i<10; i++){
+     move_head_in_front();
+     distanta();
+     
+     logic_of_movement(distanceRight,distanceLeft);
+     citire();
+     citire2();
+  }
+}
+
+
+ 
