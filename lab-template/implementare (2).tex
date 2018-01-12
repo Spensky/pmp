@@ -1,0 +1,213 @@
+\paragraph{Detalii implementare}
+\begin{itemize}
+\item
+	\tab Proiectul facut se bazeaza pe comunicarea dintre cele 2 placi , Mega si Uno. Folosind modulul de comunicare i2c descris la inceput se realizeaza o conexiune master-slave intre cele 2 placi, master fiind MEGA, cu toata logica din spate, iar UNO find slave executand comenzi primite de la MEGA.\
+	\tab\tab \bf{Prima parte - modulul "slave" UNO)}\\
+	\tab Uno contine codul pentru a rula motoarele servo si cele pentru roti. Motorul servo este folosit pentru a misca cu precizie un sonar ce este instalat peste el. Acest sonar citeste distantele folosind unde pe care le transmite si le receptioneaza, exact cum functioneaza si un liliac, si, din diferenta de timp dintre transmisie si receptia undei, se va calcula distanta din fata lui. Codul de miscare pentru servo este urmatorul.\\
+	\begin{verbatim}
+#include <Servo.h>
+\\global Servo srv;
+\\ in setup 
+		void servo_move(int val)
+{
+   Serial.println(val);
+  srv.attach(servoNumber);
+  srv.write(val);
+  delay(100);
+  srv.detach();
+  //Serial.println("Servo: ");
+  //Serial.println(val);
+ // delay(1000);
+}
+	\end{verbatim}
+	\tab Se foloseste servo.attach pentru a porni motorul servo, mai mut ca si un enable,servoNumber). Mai apoi srv.write() va scrie gradul la care se va invarti servo(de la 0 la 360, 90 fiind in fata). Iar apoi se foloseste servo.detach() pentru a inceta transmisiunea.\\
+
+	\tab Motoarele de la roti sunt actionate de 4 pini analogici(fiecare ptr un motor), avand capabilitatea PWD, adica sa reglam tensiunea transmisa lor astfel dand mai multa putere sau mai putin motorului. In setup, mai avem si definita comunicarea i2c, avand libraria Wire in care folosim Wire.begin(adresa), adresa unde se va conecta Mega.\\
+
+	\begin{verbatim}
+		void setup() {
+
+ // Pornim busul I2C ca si slave la adresa 9
+ Serial.begin(9600);
+  pinMode(trigger, OUTPUT);
+  pinMode(echo, INPUT);
+
+  digitalWrite(mpin00, 0);
+  digitalWrite(mpin01, 0);
+  digitalWrite(mpin10, 0);
+  digitalWrite(mpin11, 0);
+ 
+  pinMode (mpin00, OUTPUT);
+  pinMode (mpin01, OUTPUT);
+  pinMode (mpin10, OUTPUT);
+  pinMode (mpin11, OUTPUT);
+ 
+  // pin LED
+  pinMode(13, OUTPUT);
+
+
+ Wire.begin(9);
+ // Atasam o functie care sa se declanseze atunci cand primim ceva
+ Wire.onReceive(receiveEvent);
+ Serial.println("slave");
+}
+
+	/ Functie pentru controlul unui motor
+// Intrare: pinii m1 si m2, directia si viteza
+void StartMotor (int m1, int m2, int forward, int speed)
+{
+   
+  if (speed==0) // oprire
+  {
+    digitalWrite(m1, 0);
+    digitalWrite(m2, 0);
+  }
+  else
+  {
+    if (forward)
+    {
+       digitalWrite(m2, 0);
+       analogWrite (m1, speed); // folosire PWM
+    }
+    else
+    {
+      digitalWrite(m1, 0);
+      analogWrite(m2, speed);
+  }
+ }
+ srv.write(90);
+}
+	\end{verbatim}
+
+	\tab Functiile pentru deplasarea motorului in fata, spate, stanga ,dreapta sunt urmatoarele, si se bazeaza pe actionarea simultana a motoarelor, sau doar cate unu.\\
+
+	\begin{verbatim}
+		void move_down(){
+  
+    StartMotor (mpin00, mpin01, 1, 128);
+    StartMotor (mpin10, mpin11, 1, 128);
+    delay(400);
+    delayStopped(100);
+    
+
+    //Serial.print("down");
+
+}
+
+void move_up(){
+  
+  StartMotor (mpin00, mpin01, 0, 128);
+  StartMotor (mpin10, mpin11, 0, 128);
+  delay(200);
+  delayStopped(100);
+  
+
+  //Serial.print("up");
+}
+
+ 
+void move_left(){
+  
+  StartMotor (mpin00, mpin01, 0, 128);
+  StartMotor (mpin10, mpin11, 1, 128);
+  delay(400);
+  delayStopped(300);
+  
+
+  //Serial.print("left");
+}
+
+ 
+void move_right(){
+  
+  StartMotor (mpin00, mpin01, 1, 128);
+  StartMotor (mpin10, mpin11, 0, 128);
+  delay(400);
+  delayStopped(300);
+  
+  //Serial.print("right");
+}
+	\end{verbatim}
+
+	\tab Functia de receptie a datelor transmise de Mega catre Uno. Se va folosi o coada pentru a stoca comenzile primite de la Uno astfel , pana executa o comanda, el va memora celelalte primite si le va executa pe rand in ordine, fara sa piarda vreo comanda.\footnote{Libraria de queue.h este luata de pe site-ul de la arduino}.
+	\begin{verbatim}
+		// Atasam o functie care sa se declanseze atunci cand primim ceva
+ 		Wire.onReceive(receiveEvent); // in setup
+
+	void receiveEvent(int bytes) {
+	 x = Wire.read(); // citim un character din I2C
+ 	  queue.push(x);
+	}
+	\end{verbatim}
+	\tab Logica placii UNO va fi urmatoarea: intr-un interval de timp sau dupa finalizarea ultimei comenzi se va scoate din coada urmatoarea comanda de executat si se va procesa de functia computeLogic care va stii sa miste motoarele in fata,spate,stanga,dreapta, ori servo in functie de ce ii dicteaza logica din MEGA.\\
+
+	\begin{verbatim}
+		void loop() {
+ 
+  //Serial.println(x);
+  //delay(300);
+  //servo_move1();
+   currentMillis = millis();
+      if(currentMillis - previousMillis > interval){
+        int c = queue.pop();
+       // int c2 = queue.pop();
+        //Serial.println(c);
+        //(c !=0 && c2 != 0){
+            computeLogic(c);
+            Serial.print(c);
+          //}
+        //Serial.println(x);
+        previousMillis = currentMillis;
+         
+      }
+ 
+  //move_head_in_front();
+}
+
+void computeLogic(int x){
+  switch(x) {
+   case 1:
+      move_down();
+      break;
+   case 2:
+      move_up();
+      break;
+   case 3:
+      move_left();
+      break;
+   case 4:
+      move_right();
+      break;
+   case 6:
+      srv.detach();
+      break;
+   case 7:
+      srv.attach(servoNumber);
+      break;
+   case 8:
+      delayStopped(300);
+      break;
+   default :
+        servo_move(x);
+      //Serial.println(x);
+      //servo_move1();
+      break;
+  }
+}
+	\end{verbatim}
+	\tab\tab \bf{A doua parte - modulul "master" MEGA}\\
+	
+\end{itemize}
+	
+\paragraph{\bf{Functionalitati}}
+\begin{itemize}
+\item
+	\tab In urma realizarii proiectului, robotul experimental dipune de urmatoarele functionalitati:\\
+•	Detectia si ocolirea obstacolelor: functionalite posibila datorita utilizarii senzorului sonar, care alaturi de motorul servo determina distanta si unghiul pana la obstacole sau spre spatiul liber.\\
+•	Harta a mediului inconjurator:  detectarea de obstacole pentru pozitionarea acestora pe harta.\\
+•	Transmiterea datelor utillizand modulul wifi.\\
+
+	\tab O caracteristica importanta a robotului consta in tranzitia implementarii functionalitatilor principale de pe placa Arduino pe placa de dezvoltarea Arduino Mega2560. Astfel, logica de functionare a motoarelor DC si a motorului servo ramane in continuare in seama placii Ardino, pe cand restul functionalitatilor sunt implementate de catre Arduino Mega2560 prin utilizarea protocolului I2C ( Inter Integrated Circuit). \\
+	\tab Protocolul I2C reprezinta un protocol ce a fost creat pentru a permite mai multor circuite integrate “slave” sa comunice cu unul sau mai multe cipuri “master”.  Astfel, rolul de “master” este reprezentat de placa  Arduino Mega2560, iar rolul de “slave” este reprezentat de placa Arduino.\\
+
+\end{itemize}

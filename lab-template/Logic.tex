@@ -1,0 +1,240 @@
+
+\graphicspath{ {images/} }
+\paragraph{Introduction}
+
+\begin{itemize}
+\item
+	\tab A logic must define semantics or meaning of sentences. Sentences are expressed in a language called \textbf{a knowledge representation language} and represents some asssertion about the sorrunding world.The project is done in propositional logic combine with first order logic and arithmetics.\footnote{Some prhases taken from AIMA cap 3  section 7}.\\
+	\tab The propositional logic represents the logic between simple sentences and si build around facts. An atomic senteces is a sentences which is not derived from another sentence.Therefor, it consists of a single proposition symbol. Complex sentences are constructed from simpler sentences, using parentheses and logical connectives.\\
+I have used propositional logic to define some axioms which are used in the beginning of the generated solution, and some guidance sentences for maze to give the proper solution.\\
+	\tab The first order logic language is build around objects and relations.We used it to build sentences for general purpose logic like , predicate symbols and functions.\\
+	\tab The arithemtic library is used for maze4 , by setting it in the beginning of the problem. \footnote{prover9 manual} It has some several functions and predicate symbols as operations and relation over integers . For example: sum, product, equal, less than, greater than, etc.I have used it to describe and find a second solution for my problem and to compare it with the first one using propositional logic and first order logic.\\
+\end{itemize}
+
+\paragraph{The problem}
+\begin{itemize}
+\item{\textbf{Propositional logic and fol implementation}}\\
+	\tab For my demonstration i have choose a puzzle game from tptp site\footnote{PUZ134-2}. The problem does not have a solution in prover9 as it is not consistent enough given the logic provided to describe the problem. To simplify the problem it describes five humans and five professions. Given some sentences regarding  age comparisons between humans and the humans doing a particular profession, one should descibe the model (the solution) of the problem attribuing each job to one person, so no persons remain without a job assign.\\
+\includegraphics[scale=0.6]{problem}
+
+	\tab As i said there is \textbf{ NOT} a solution on the site, so i ,firstly, resolve it on paper and afterthat, i  resolved it on maze4 using porpositional logic and first order logic combined. The solution on the tptp site shows that :\\
+	\tab 	\% RESULT: PUZ134-2 - Mace4---1109a says Inappropriate - CPU = 0 WC = 0 \\
+		\% OUTPUT: PUZ134-2 - Mace4---1109a says None - CPU = 0 WC = 0 \\
+	\tab So i have started implementing it in fol and propositional logic. Transcribing information from the text problem to prover9 sintax we have the following sentences:\\
+	\tab First declaring the existance of the jobs practicians and that they are also human.\\
+		exists x tehnician(x) -> human(x).    \\  
+		exists x consultant(x) -> human(x).  \\   
+		exists x planner(x) -> human(x).\\
+		exists x engineer(x) -> human(x).\\
+		exists x nutritionist(x) -> human(x).\\
+	\tab Then declaring the persons that are humans.(axioms)\\
+		human(a).   \\           
+		human(b). 	\\	
+		human(c).\\
+		human(d).\\
+		human(e).\\
+	\tab After we decalred the text information regarding age comparison between persons.\\
+		younger(e,c).  	\\	
+		younger(c,b). \\		
+		younger(d,a).\\
+		younger(b,d).\\
+	\tab Some logical conditions like ,if a human is doing a profesion ,they can not do another one.\\
+		all x (tehnician(x) <-> -consultant(x) \& -planner(x) \& -enginner(x) \& -nutritionist(x)).etc...\\
+	\tab Another condition: if human(x) is a profession than the others can not be the same profession\\
+		consultant(a) <-> -consultant(b) \& -consultant(c) \& -consultant(d) \& -consultant(e).\\
+	\tab We continue to transscribe the text info.\\
+		\%any engineer is older than human(b) which also implies that b can not be \\
+		\%an engineer \\
+		all x (engineer(x) \& -engineer(b) -> younger(b,x)).\\
+		\%any planner is younger than any tehnician(given in the text info)\\
+		all x (planner(x) \& tehnician(y) -> younger(x,y)).\\
+		\%any nutritionist is younger than any planner(given in the text info)\\
+		all x (nutritionist(x) \& planner(y) -> younger(x,y)).\\
+	\tab Here we have finished the text conditions and we start thinking to help mcae4 find the solution to the problem.\\
+		\%we are saying that any person who is younger than someone else can not be a consultant\\
+		\%because consultant is the oldest of them all.(some helping hand for mace4 to find the \\
+		\%solution)\\
+		all x (all y (younger(x,y) -> -consultant(x))).\\
+		all x (-engineer(x) \& -enginner(d) \& -consultant(x) -> younger(x,b)).\\
+		\%any human who is older than human(b) can be an engineer or an consultant\\
+		\%(given to help mace4 find the solution).\\
+		all x (younger(b,x) \& -engineer(d) -> engineer(x) | consultant(x)).\\
+		\%any human(x) who is younger than human(d) is a planner or a nutritionist or a tehnician\\
+		\%helping sentence derived from any engineer is older than b and consultant is the oldest.\\
+		all x (younger(x,d) -> planner(x) | nutritionist(x) | tehnician(x)).\\
+
+		\tab We have tried to define the function younger by implementing a simple logic with the \& operator.\\
+		all x (job1(x) \& all y ( job2(y) -> younger(x,y))).\\
+		\tab Which translates in : any human(x) who is job1 and any human(y) who is job2 implies that human(x) is younger than human(y).\\
+		\tab For that to work properly we should also take in consideration that job1(x) must be different than job2, which implies that humans msut be different\\	
+		all x (job1(x) \& all y ( job2(y) \& x!=y-> younger(x,y))). OR\\
+		all x (job1(x) -job2(x) \& all y ( job2(y) -> younger(x,y))).\\
+		\tab  In the final implementation i have decided to put all of logic regarding differences in one place.\footnote{Example: all x (tehnician(x) <-> -consultant(x) \& -planner(x) \& -enginner(x) \& -nutritionist(x)).etc...}\\
+\includegraphics[scale=0.8]{resolve}\\
+
+\item{\textbf{Arithmetic implementation}}\\
+	\tab We have describe the logic of the problem using arithmetic library to compare the solution given by it to the first implementation.\\
+	\tab First we decalred 2 lists , one containing the job titles and the other the persons.\\
+		list(distinct).\\
+		\[consultant,tehnician,planner,engineer,nutritionist\].\\
+		\[a,b,c,d,e\].\\
+		end-of-list.\\
+	\tab Then we implement the younger and older functions using arithemtic operands ">" and "<".\\
+		x < y <-> younger(x,y).\\
+		x > y <-> older(x,y).\\
+	\tab After we transcribe the text info into prover9 implementation.\\
+		younger(tehnician,consultant) \&\\ 
+		younger(nutritionist,consultant) \&\\
+		younger(planner,consultant) \& \\
+		younger(engineer,consultant).\\
+
+		older(tehnician,planner).\\
+		older(planner,nutritionist).\\
+
+		younger(e,c).\\
+		younger(c,b).\\
+		younger(d,a).\\
+		younger(b,d).\\
+	\tab Here we have 4 solutions given in maze4 which we will discuss in the \textbf{comparison section}.So we need a stronger sentence to link the others to give the real solution.\\ 
+		older(engineer,tehnician).\\
+	\tab This sentence will link the engineer to the tehnician in yerarchy and prove the only solution given by maze.\\		 
+	\includegraphics[scale=0.9]{save}\\
+\end{itemize}
+
+\paragraph{The comparison}
+\begin{itemize}
+\item
+	\tab In our little adventure of logic world we have implemented a functional model for a puzzle solution from tptp, which can not be solved 			given the input provided, so we have to think a little bit more about the problem.After, we solved it using arithmetics which was more easier 			and had given an optimal solutin, which is by the table  5 times faster than the first solution provided.\\	
+\item{\textbf{The corect solution}}\\
+	\tab The correct solution, and the only one ,that i've found on paper is this:\\
+		Human(a) is consultant.\\
+		Human(b) is technician.\\
+		Human(c) is planner.\\
+		Human(d) is engineer.\\
+		Human(e) is nutritionist.\\
+	\tab Next i will show that each solution is the correct one found.\\
+
+\item{\textbf{The first solution}}\\
+		\tab Solution to the problem given by the propositional logic and fol shows like this:\\
+		interpretation( 5, [number=1, seconds=0], [\\
+
+       		 function(a, [ 0 ]),\\
+		
+      		  function(b, [ 1 ]),\\
+
+       		 function(c, [ 2 ]),\\
+
+        function(d, [ 3 ]),\\
+
+        function(e, [ 4 ]),\\
+
+        relation(consultant(-), [ 1, 0, 0, 0, 0 ]),\\
+
+        relation(engineer(-), [ 0, 0, 0, 1, 0 ]),\\
+
+        relation(enginner(-), [ 0, 0, 0, 1, 0 ]),\\
+
+        relation(human(-), [ 1, 1, 1, 1, 1 ]),\\
+
+        relation(nutritionist(-), [ 0, 0, 0, 0, 1 ]),\\
+
+        relation(planner(-), [ 0, 0, 1, 0, 0 ]),\\
+
+        relation(tehnician(-), [ 0, 1, 0, 0, 0 ]),\\
+
+        relation(younger(-,-), [\\
+			   0, 0, 0, 0, 0,\\
+			   0, 0, 0, 1, 0,\\
+			   0, 1, 0, 0, 0,\\
+			   1, 0, 0, 0, 0,\\
+			   0, 0, 1, 0, 0 ])\\
+	]).\\
+	\tab \\Here we can see the model array which is transcibed as this:\\
+		\begin{verbatim}
+		[a,b,c,d,e]  ->[consultant,tehnician,planner,engineer,nutritionist].\\
+		 which is the solution.\\
+		\end{verbatim}
+	\tab The statistics shows that it took 0.06 second of CPU time and kept 384 ground clauses.(ground is the connection between logical reasoning processes and the real environment in which the agent exists\footnote{AIMA cap 3 section 7.4}.\\Selection refere to how many selected sentences are made to find the model and rewrites: how many of them are rewritten.\\
+	\includegraphics[scale=0.8]{model1}\\
+
+
+\item{\textbf{The second solution}}\\
+	\tab Solution to the problme is given by the arithemtic library and shows like this:\\
+		interpretation( 5, [number=1, seconds=0], [\\
+
+        function(a, [ 4 ]),\\
+
+        function(b, [ 2 ]),\\
+
+        function(c, [ 1 ]),\\
+
+        function(consultant, [ 4 ]),\\
+
+        function(d, [ 3 ]),\\
+
+        function(e, [ 0 ]),\\
+
+        function(engineer, [ 3 ]),\\
+
+        function(nutritionist, [ 0 ]),\\
+
+        function(planner, [ 1 ]),\\
+
+        function(tehnician, [ 2 ]),\\
+
+        relation(older(-,-), [\\
+			   0, 0, 0, 0, 0,\\
+			   1, 0, 0, 0, 0,\\
+			   1, 1, 0, 0, 0,\\
+			   1, 1, 1, 0, 0,\\
+			   1, 1, 1, 1, 0 ]),\\
+
+        relation(younger(-,-), [\\
+			   0, 1, 1, 1, 1,\\
+			   0, 0, 1, 1, 1,\\
+			   0, 0, 0, 1, 1,\\
+			   0, 0, 0, 0, 1,\\
+			   0, 0, 0, 0, 0 ])\\
+]).\\
+
+	\tab \\Here we can see the model array which is transcibed as this:\\
+		\begin{verbatim}
+		[a,b,c,d,e]  ->[consultant,tehnician,planner,engineer,nutritionist].\\
+		 which is the solution.\\
+		\end{verbatim}
+	\tab The statistics shows that it took 0.01 seconds of CPU time and kept 131 ground clauses which is far better than my first implementation.\\
+		 \includegraphics[scale=0.8]{model2}\\
+
+	\tab One point to offer, writting the information given in text, mace4 gives us 4 models , in which 3 are false.So we should guide him, by adding some more information to reduce the number of information to the correct one.\\
+	\tab We write antoher help sentence :\\
+		younger(tehnician,engineer). to link them and reduce the mace models to one.\\
+	
+\end{itemize}
+
+\paragraph{The conclusions}
+\begin{itemize}
+\item{Table}\\
+\begin{table}
+\begin{center}
+\caption{Results}
+\begin{tabular}{|p{3cm}lp{3cm}lp{3cm}lp{3cm}|p{3cm}|}\hline
+\textbf{Implementation}&\textbf{CPU time} & \textbf{Ground cl}& \textbf{selections}& \textbf{rewrites} & | \\ \hline
+{\it Prep \& fol}  & $0.06$  & $384$ & $292$ & $1660$ &$ |$\\ \hline
+{\it Arithmetic} & $0.01$ & $131$& $12$& $457$  &$ |$\\  \hline
+\end{tabular}
+\end{center}
+\end{table}
+\item {Some words}\\
+	\tab In our little adventure of logic world we have implemented a functional model for a puzzle solution from tptp, which can not be solved given the input provided, so we have to think a little bit more about the problem.After, we solved it using arithmetics which was more easier and had given an optimal solutin, which is by the table  5 times faster than the first solution provided.\\	
+	\tab We can see from far that logic design by the library arithmetic is more efficent that what we have tried to accomplish using fol and propositional logic. The operators "less than" , "greater than" are well defined and they don't expand many clauses and from that select fewer ones.Thus, our work regarding expressing the best logic in propositional logic and first order logic is far by optimum, but at least it's consistent and gives correct results.  \\
+	\tab We have dived deep , also in the univers of quantifiers, which in fol are two of them: universal( all) and existential(exists) and used them to express our logical sentences.\\
+\end{itemize}
+
+\paragraph{Guideings anex}
+\begin{itemize}
+\item
+	\tab Maze4 output of the original solution (4 mazes with 1 correct the other 3 false) ,without add-ons is on file maze4OutOriginalArith.\\
+	\tab  Maze4 output of the final veriosn with one correct model  is on file maze4OutFinalArith.\\
+	\tab Maze4 output of propositional logic and first oder logic and code is on file fol.\\
+
+\end{itemize}

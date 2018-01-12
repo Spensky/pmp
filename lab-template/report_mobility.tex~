@@ -1,0 +1,284 @@
+\documentclass[a4paper,12pt]{report}
+\usepackage[margin=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{listings} 
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{zeta}
+\usepackage[inline]{trackchanges}
+\usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps}
+%\usepackage{makeidx}
+\usepackage{tocloft}
+%\usepackage{romanian}
+
+%\addeditor{adrian}
+%\addeditor{berni}
+%\addeditor{ady}
+%\addeditor{victor}
+%\addeditor{matei}
+%\addeditor{roxana}
+%\addeditor{nicu}
+%\addeditor{alin}
+%\addeditor{bianca}
+
+
+%opening
+\title{{\bf Intelligent Systems Group}\\[1cm]
+\bf{Internship 2013}\\[1cm]
+%\textbf{Ontology Building Competition}\\ [1cm]
+%First Edition - June 2013\\[1cm]
+%{\bf Draft Document v 0.4}\\
+%\date{Mar 16 2013}
+}
+
+
+\author{{\bf Student:}\\
+email@cs.utcluj.ro\\[5cm]
+ Tutore: Adrian Groza\\ 
+Intelligent Systems Group\\
+Adrian Groza@cs.utcluj.ro\\[5cm]}
+%\begin{center}
+%
+%\end{center}
+
+
+%\newcounter{Metriccount}
+%\setcounter{Metriccount}{0}
+%\newenvironment{metric}
+%{% This is the begin code
+%\stepcounter{Metriccount} {\bf\small Metric} \arabic{Metriccount} \begin{it}
+%}
+%{
+%\end{it}}
+
+
+\newcommand{\listtodotitle}{To-do list}
+\newlistof{todos}{tod}{\listtodotitle}
+\newcommand{\todolist}[1]{%
+\refstepcounter{todos}
+\addcontentsline{tod}{todos}
+{\protect\numberline{\thechapter.\thetodos} #1}}
+\newcommand{\todo}[1]{\todolist{#1}\textbf{\underline{TODO}: #1}}
+
+
+\newcommand{\listmetricstitle}{List of metrics}
+\newlistof{metrics}{metric}{\listmetricstitle}
+\newcommand{\metricslist}[1]{%
+\refstepcounter{metrics}
+\addcontentsline{metric}{metrics}
+{\protect\numberline{\thechapter.\themetrics} #1}}
+\newcommand{\metric}[1]{\metricslist{#1}\textbf{\underline{Metric}: #1}}
+
+
+\newcommand{\listexamplename}{List of Examples}
+
+%\newcommand{\paper}{\textit{Engineering a Comprehensive Romanian Tourism Ontology} }
+%\newcommand{\conf}{2nd Workshop on Intelligent Systems: concepts, models, services and applications at ICMCS2014, }
+%\newcommand{\loc}{Chisinau, Republica Moldova}
+%\newcommand{\perioada}{22-26 Octombrie 2014}
+%\newcommand{\researchproject}{"ASDEC - Structural Argumentation for  Decision Support with Normative Constraints, Romania - Republic of Moldova Bilateral Contract, Mai 2013-Dec 2014``}
+%\newcommand{\indexare}{\textit{Google Scholar}}
+%\newcommand{\dispozitie}{\textit{nr. 929 din 9.10.2014}}
+\newcommand{\currentdata}{14 February 2015}
+
+%\newlistof{example}{exp}{\listexamplename}
+%\newcommand{\myexample}[1]{%
+%\refstepcounter{example}
+%\par\noindent\textbf{Example \theexample. #1}
+%\addcontentsline{exp}{example}
+%{\protect\numberline{\thechapter.\theexample}#1}\par}
+
+\begin{document}
+\vspace{-5cm}
+\begin{center}
+Department of Computer Science\\
+Technical University of Cluj-Napoca\\
+\pgfimage[width=10cm]{fig/footer}
+\end{center}
+\vspace{1cm}
+%\maketitle
+\begin{center}
+\begin{Large}
+ Intelligent Systems\\
+\end{Large}
+Laboratory activity\\
+2014-2015,\\
+Assoc. Prof.dr. eng. Adrian Groza\\
+Adrian.Groza@cs.utcluj.ro
+\end{center}
+
+\tableofcontents
+
+
+\chapter{Rules and policies}
+
+\begin{enumerate}
+ \item For the laboratory work you have two assessments, each worthing 15\% from the final grade. 
+The evaluation criteria for each assessment are listed in Tables~\ref{tab:first} and~\ref{tab:second}. 
+\item Tables~\ref{tab:first} and~\ref{tab:second} also bears out nine deadlines that you have to meet for achieving the points. They correspond to the following weeks: $W_2, W_4, W_5, W_6, W_{10}, W_{11}, W_{12}, W_{13}, W_{14}$. After each deadline you will get (or not) the achievable points. 
+\item Before each deadline, you have to send your work (latex documentation/code) via $ssh$, exactly as follows:\\
+\hspace*{2cm}\texttt{ssh WX\_Name\_Group\_Tool.tar.gz si2014@192.168.1.98}\\
+\hspace*{2cm}\texttt{pass: si2014}\\
+where the deadline $WX\in \{W_2, W_4, W_5, W_6, W_{10}, W_{11}, W_{12}, W_{13}, W_{14}\}$
+\item Realistic and original scenarious are encouraged. Well known toy problems (salesmen, map coloring, logistic planning, wumpus, sudoku, queens, missionaires and canibals, etc) do not worth much for your grade. 
+Your scenario should be realistic and should be bussiness oriented. 
+Note that the focus is not on programming, but on modelling the reality into a formal representation.
+\item {\it Laptop policy}: you can use your own laptops as long you have Linux. One goal of the laboratory is to increase your competency in Linux. You have to set static IPs:
+\begin{center}
+\begin{tabular}{ll}
+IP: & 192.168.1.51\footnote{Or 52-59: avoid introducing the same IP for two different stations.}\\ 
+MASK:&  255.255.255.0\\
+GATEWAY:&  192.168.1.2\\
+DNS:& 192.168.1.2\\
+PROXY & 192.168.1.2:3128\\
+\end{tabular}
+\end{center}
+
+\item {\it Group change policy.} Maximum number of students in a class is 14.
+
+\end{enumerate}
+
+
+
+
+\begin{table}
+\caption{First evaluation (15\%).}
+\begin{tabular}{|p{10cm}|p{1.7cm}|p{1.9cm}|p{1.7cm}|}\hline
+\textbf{Activity} & \textbf{Deadline} & \textbf{Achievable points} & \textbf{Obtained points} \\ \hline
+Installing the tool  & $W_2$ & 2 &\\ \hline
+Running and understanding the examples attached to each tool& $W_4$ & 3 & \\ \hline
+Selecting an adequate scenario to be implemented using the tool. 
+Describing the specifications of your own scenario. 
+Describing the top level design of your scenario. & $W_5$ & 2 & \\ \hline
+Identifying and describing the knowledge bases (data sets, articles, studies, etc.) planned to be used for realistic modeling of your scenario. & $W_6$ & 2 &\\ \hline
+ & Total & \textbf{9} & \\ \hline
+\end{tabular}
+\label{tab:first}
+\end{table}
+
+\begin{table}
+\caption{Second evaluation (15\%).}
+\begin{tabular}{|p{10cm}|p{1.7cm}|p{1.9cm}|p{1.7cm}|}\hline
+\textbf{Activity} & \textbf{Deadline} & \textbf{Achievable points} & \textbf{Obtained points} \\ \hline
+{\it Implementing your scenario.} We try to evaluate how much your solution reflects the reality. 
+This is a quantitative criteria: we evaluate how many aspects from real world have been covered by your solution.  & $W_{10}$ & 4 &\\ \hline
+{\it Explointing the expressivity of the tool.} 
+We try to evaluate how many capabilies provided by the tool have been enacted within your implementation. 
+This is a calitative criteria: a complex realistic scenario requires more expressivity. & $W_{11}$ & 2 & \\ \hline
+{\it Validating the correctness/efficiency} of your solution throgh graphs and/or experiments. & $W_{12}$ &  1 & \\ \hline
+{\it Comparing your solution with related work.} Illustrate the advantages and weak points of your solution (description and code showing adavantages/disatvantages). & $W_{13}$ & 1.5 & \\ \hline
+{\it Using Latex in your documentation.} You have to show some competency on writing documentation in Latex. 
+For instance, you have to employ various elements: lists, cite, footnotes, verbatim, maths, etc. & $W_{14}$ & 0.5 & \\ \hline
+ & Total & \textbf{9} & \\ \hline
+\end{tabular}
+\label{tab:second}
+\end{table}
+
+
+%\printindex 
+\chapter{First assessment}
+%\vspace{3cm}
+%\hspace{-0.5cm} \currentdata \hspace{4cm}Assoc. Prof.dr. eng. Adrian Groza\\
+The following is a latex template for your documentation. 
+Small documentation suffices, if it covers all the topics below. 
+
+\section{Installing the tool ($W_2$)}
+
+List the performed steps required to run the tool.
+
+\section{Running and understanding examples ($W_4$)}
+Describe the exemples that you run.
+
+What type of problems can be develop by the tool?
+ 
+\section{Running scenario ($W_5$)}
+
+\subsection{Narrative description}
+
+
+\subsection{Specifications}
+
+\subsection{Top level design of the scenario}
+
+\section{Related work ($W_6$)}
+Point towards the knowledge bases that you plan to exploit. 
+The existence of these sources are required to prove that your approach is realistic.
+Examples of knowledge sources include:
+\begin{itemize}
+ \item Articles: browse online libraries like Science Direct or Google Scholar. Obtain the .bib file of each article that you will rely on. Cite and describe the main idea of the paper.
+\item Data sets: i.e., https://archive.ics.uci.edu/ml/datasets.html 
+\item Statistics: i.e., http://ec.europa.eu/eurostat 
+\end{itemize}
+
+
+
+
+\chapter{Second assessment}
+
+
+\section{Implementation details}
+Illustrate each aspect of the reality that you have modelled in your solution.
+Provide the relevant code (see an example in Fig.~\ref{fig:code}).
+
+\begin{figure}
+\begin{verbatim}
+(full-reset)
+(instance a Argument)
+(related a b attacks)
+(concept-instances Argument) 
+\end{verbatim}
+\caption{Modelling arguments in Racer.}
+\label{fig:code} 
+\end{figure}
+
+\section{Tool expressivity ($W_{11}$}
+Describe each technical instrumentation provided by the tool and enacted in your implementation.
+For instance:
+
+
+{\it "Racer offers also the capability to use {\it rules}. The code in Fig.~\ref{fig:rules} illustrates my rule used to create instances of type student."}
+
+
+
+\begin{figure}
+\begin{verbatim}
+(fire-rule (a) (b) ((instance s Student))
+\end{verbatim}
+\caption{Rules in Racer.}
+\label{fig:rules} 
+\end{figure}
+
+\section{Graph and experiments ($W_{12}$}
+You have to provide print screens with various experiments that you performed. 
+You have to interpret the obtained results.
+
+\begin{figure}
+%\includegraphics[width=8cm]{} 
+\caption{Increasing the accuracy with the number of samples.}
+\label{fig:accuracy}
+\end{figure}
+
+
+\section{Related Work and Discussion ($W_{13}$}
+
+\subsection{Related approaches for the same problem}
+Identify and describe other solutions for solving the same scenario like yours.
+
+
+\subsection{Advantages and limitations of your solution}
+
+
+\bibliographystyle{plain}
+\bibliography{is}
+
+
+\vspace{2cm}
+\begin{center}
+Intelligent Systems Group\\
+\pgfimage[width=10cm]{fig/footer}
+\end{center}
+
+
+
+\end{document}

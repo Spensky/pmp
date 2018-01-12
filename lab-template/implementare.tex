@@ -1,0 +1,574 @@
+\graphicspath{ {images/} }
+
+
+\paragraph{Functii si algoritmi}
+
+\begin{itemize}
+\item
+	\tab In functia de baza main avem functiile care se vor apela.\\
+	\tab \tab \bf{initOpenGLWindow()} aceasta functie va creea si instantia o fereastra de tip GLFW. Se va folosi libraria GLFW in locul celorlalte ca sa fie in concordanta cu laboratorul.\\
+	\begin{verbatim}
+	bool initOpenGLWindow()
+{
+	if (!glfwInit()) {
+		fprintf(stderr, "ERROR: could not start GLFW3\n");
+		return false;
+	}
+
+	//for Mac OS X
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+	glWindow = glfwCreateWindow(glWindowWidth, glWindowHeight, "OpenGL Shader Example", NULL, NULL);
+	if (!glWindow) {
+		fprintf(stderr, "ERROR: could not open window with GLFW3\n");
+		glfwTerminate();
+		return false;
+	}
+
+	glfwSetWindowSizeCallback(glWindow, windowResizeCallback);
+	glfwMakeContextCurrent(glWindow);
+
+	glfwWindowHint(GLFW_SAMPLES, 4);
+
+	// start GLEW extension handler
+	glewExperimental = GL_TRUE;
+	glewInit();
+
+	// get version info
+	const GLubyte* renderer = glGetString(GL_RENDERER); // get renderer string
+	const GLubyte* version = glGetString(GL_VERSION); // version as a string
+	printf("Renderer: %s\n", renderer);
+	printf("OpenGL version supported %s\n", version);
+
+	//for RETINA display
+	glfwGetFramebufferSize(glWindow, &retina_width, &retina_height);
+
+    //glfwSetInputMode(glWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+	return true;
+}
+	\end{verbatim}
+	
+	\tab \tab \bf{initOpenGLState()} aceasta functie va colora default fereastra cu culoare (0.3,0.3,0.3,1.0). Se va putea ajusta dimensiunile ferestrei folosind glViewport , iar apoi se vor apela functiile predefinite in libraria GLM, functii care nu pot fi suprascrise, precum functia de adancime, functia de taiere , de detectare a fetei frontale.\\ 
+	\begin{verbatim}
+		void initOpenGLState()
+{
+	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+	glViewport(0, 0, retina_width, retina_height);
+
+	glEnable(GL_DEPTH_TEST); // enable depth-testing
+	glDepthFunc(GL_LESS); // depth-testing interprets a smaller value as "closer"
+	//glEnable(GL_CULL_FACE); // cull face
+	glCullFace(GL_BACK); // cull back face
+	glFrontFace(GL_CCW); // GL_CCW for counter clock-wise
+}
+
+	\end{verbatim}
+
+	\tab \tab \bf{loadSkybox()} aceasta functie va incarca intr-un array de texturi toate cele 6 fete ale cubului de cer si le va prepara pentru intrarea in fereastra apeland shaderele lor si trimitand view-ul si proiectia programului.\\
+	\begin{verbatim}
+		void loadSkybox() {
+	faces.push_back("textures/skybox/right.tga");
+	faces.push_back("textures/skybox/left.tga");
+	faces.push_back("textures/skybox/top.tga");
+	faces.push_back("textures/skybox/bottom.tga");
+	faces.push_back("textures/skybox/back.tga");
+	faces.push_back("textures/skybox/front.tga");
+	mySkyBox.Load(faces);
+	skyboxShader.loadShader("shaders/skyboxShader.vert", "shaders/skyboxShader.frag");
+	skyboxShader.useShaderProgram();
+	view = myCamera->getViewMatrix();
+	glUniformMatrix4fv(glGetUniformLocation(skyboxShader.shaderProgram, "view"), 1, GL_FALSE,
+		glm::value_ptr(view));
+	projection = glm::perspective(glm::radians(45.0f), (float)retina_width / (float)retina_height, 0.1f, 1000.0f);
+	glUniformMatrix4fv(glGetUniformLocation(skyboxShader.shaderProgram, "projection"), 1, GL_FALSE,
+		glm::value_ptr(projection));
+}
+	\end {verbatim}
+
+	\tab \tab \bf{linitModels()} aceasta functie va incarca in fereastra modele noastre de tipul obj, impreuna si cu mtl-urile lor (fisiere ce descriu unde sunt mapate texturile etc).\\
+	\begin{verbatim}
+		void initModels()
+{ 
+	myModel = gps::Model3D("objects/modelScene.obj", "objects/");
+	lightCube = gps::Model3D("objects/cube/cube.obj", "objects/cube/");
+	ufo = gps::Model3D("objects/UFO & texture/untitled.obj", "objects/UFO & texture/");
+}
+	\end{verbatim}
+
+	\tab \tab \bf{initShaders()} aceasta functie va initializa toate shaderele folosite pentru obiectele noastre, in cazul nostru vom avea shader pentru scena statica, shadere diferite pentru obiectele dinamice, cu animatii, shader de lumina si de adancime.\\
+	\begin{verbatim}
+	void initShaders()
+{
+	myCustomShader.loadShader("shaders/shaderStart.vert", "shaders/shaderStart.frag");
+	lightShader.loadShader("shaders/lightCube.vert", "shaders/lightCube.frag");
+	depthMapShader.loadShader("shaders/simpleDepthMap.vert", "shaders/simpleDepthMap.frag");
+	ufoShader.loadShader("shaders/ufo.vert", "shaders/ufo.frag");
+	
+}	
+	\end{verbatim}
+
+	\tab \tab \bf{initUniforms()} aceasta functie va initializa toate variabilele de tipul uniform \footnote{Aceste variabile sunt folosite pentru a trimite date din program direct in fragment shader, variabile precum positia , directia , culoarea lumii initiale, pozitii si culori  pentru obiectele dinamice,etc }\\ cu valoriile initiale si se va salva locatiile varabilelor din shadere in variabilele din program care ulterior vor fi folosite in render() pentru a fi reapelate non-stop si ptr a trimite valori shaderelor. \\
+
+	\begin{verbatim}
+	void initUniforms()	
+{
+	myCustomShader.useShaderProgram();
+
+	modelLoc = glGetUniformLocation(myCustomShader.shaderProgram, "model");
+
+	viewLoc = glGetUniformLocation(myCustomShader.shaderProgram, "view");
+	
+	normalMatrixLoc = glGetUniformLocation(myCustomShader.shaderProgram, "normalMatrix");
+	
+	lightDirMatrixLoc = glGetUniformLocation(myCustomShader.shaderProgram, "lightDirMatrix");
+
+	projection = glm::perspective(glm::radians(45.0f), (float)retina_width / (float)retina_height, 0.1f, 1000.0f);
+	projectionLoc = glGetUniformLocation(myCustomShader.shaderProgram, "projection");
+	glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));	
+
+	glUniform3fv(glGetUniformLocation(myCustomShader.shaderProgram, "cameraPosEye"), 1, glm::value_ptr(myCamera->getCameraPosition()));
+	glUniform3fv(glGetUniformLocation(myCustomShader.shaderProgram, "nbOfPointLights"), 1, &numberOfLights);
+	glUniformMatrix4fv(glGetUniformLocation(lightShader.shaderProgram, "fogDensity"), 1, GL_FALSE, glm::value_ptr(fogFactor));
+	//lumina soare
+	lightDir = glm::vec3(sunX, sunY, sunZ);//77 max 110.0f -49.0f min279x
+	lightDirLoc = glGetUniformLocation(myCustomShader.shaderProgram, "lightDir");
+	glUniform3fv(lightDirLoc, 1, glm::value_ptr(lightDir));
+
+	//culoare
+	lightColor = glm::vec3(1.0f, 1.0f, 1.0f); //white light
+	lightColorLoc = glGetUniformLocation(myCustomShader.shaderProgram, "lightColor");
+	glUniform3fv(lightColorLoc, 1, glm::value_ptr(lightColor));
+
+	lightShader.useShaderProgram();
+	glUniformMatrix4fv(glGetUniformLocation(lightShader.shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+
+	myCustomShader.useShaderProgram();
+	//pentru celelalte lumini punctiforme
+	//for (int i=0; i < numberOfLights; ++i) {
+		lightDirPoint = LightPositions[0];
+		lightDirPointLoc = glGetUniformLocation(myCustomShader.shaderProgram, "pointPos");
+		glUniform3fv(lightDirPointLoc, 1, glm::value_ptr(lightDirPoint));
+
+		//set light color
+		lightColorPoint = glm::vec3(1.0f, 0.75f, 0.25f); //galben
+		lightColorPointLoc = glGetUniformLocation(myCustomShader.shaderProgram, "lightColorPoint");
+		glUniform3fv(lightColorPointLoc, 1, glm::value_ptr(lightColorPoint));
+
+		lightShader.useShaderProgram();
+		glUniformMatrix4fv(glGetUniformLocation(lightShader.shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+	//}
+
+	ufoShader.useShaderProgram();
+
+	modelLocUfo = glGetUniformLocation(ufoShader.shaderProgram, "model");
+	
+	viewLocUfo = glGetUniformLocation(ufoShader.shaderProgram, "view");
+	glUniform3fv(viewLocUfo, 1, glm::value_ptr(lightDir));
+	projectionLoc = glGetUniformLocation(ufoShader.shaderProgram, "projection");
+	glUniform3fv(glGetUniformLocation(ufoShader.shaderProgram, "lightDir") , 1, glm::value_ptr(lightDir));
+	glUniform3fv(glGetUniformLocation(myCustomShader.shaderProgram, "lightColor"), 1, glm::value_ptr(lightColor));
+	glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
+
+}
+	\end{verbatim}
+	
+	\tab \tab \bf{renderScene()} aceasta functie va desena scena propiu zisa. Primul algoritm folosit aici este acela de genereare a umbrelor. Se va desena scena in functie de pozitia luminii prima data, care poate fi loata ca si o camera, toate obiectele ce nu se pot vedea de pe pozitia luminii vor fi notate cu inf intr-un depth buffer, iar cele mai apropiate vor fi notate cu valorile cele mai mici. Se va pastra in depth buffer doar cele mai apropiate obiecte si cele ce se pot vedea din perspectiva luminii. Depth bufferul generat va fi alb-negru,alb obiectelor ce nu intervin in adancime si negru celor care intervin. Aceasta este prima parcurgere a scenei, a doua va genera scena propiu zisa , cu texturi si se va mapa cu depth bufferul nostru, astfel in zonele in care din pozitia luminii nu se pot vedea din cauza obiectelor din fata, vor fi desenate cu culoarea din depth buffer(negru), iar restul cu culoarea texurii. Pentur a putea mapa corespunzator depthbuffer-ul la scena, si implicit la fereastra se va folosi glViewPort, odata pentru a transforma vederea in dimensiunile depth bufferului iar apoi se va aplica inca odata ptr a o transforma in dimensiunile ferestrei. Tot aici se vor transmite permanent miscarea camerei ( camera->viewMatrix) care va influenta normalele si modele si restul care vor fi recalculate. Inclusiv pozitile obiectelor vor fi recalculate la fiecare interval de timp inmultind cu matricea MVP(model view perspective).Tot aici inafara de scena statica se vor redesena permanent obiectele puse in miscare cat si luminiile, generand o scena si o atmosfera dinamica a proiectului.\\
+	
+	\begin{verbatim}
+	void renderScene()
+{
+
+	processMovement();	
+
+	//render the scene to the depth buffer (first pass)
+	
+	depthMapShader.useShaderProgram();
+	glCullFace(GL_FRONT);
+	
+	glUniformMatrix4fv(glGetUniformLocation(depthMapShader.shaderProgram, "lightSpaceTrMatrix"),
+		1,
+		GL_FALSE,
+		glm::value_ptr(computeLightSpaceTrMatrix()));
+		
+	glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
+	glBindFramebuffer(GL_FRAMEBUFFER, shadowMapFBO);
+	glClear(GL_DEPTH_BUFFER_BIT);
+	
+	//create model matrix for nanosuit
+	model = glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::vec3(0, 1, 0));	
+	//send model matrix to shader
+	glUniformMatrix4fv(glGetUniformLocation(depthMapShader.shaderProgram, "model"),
+		1,
+		GL_FALSE,
+		glm::value_ptr(model));
+
+	myModel.Draw(depthMapShader);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glCullFace(GL_BACK);
+	//render the scene (second pass)
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	myCustomShader.useShaderProgram();
+
+	//send lightSpace matrix to shader
+	glUniformMatrix4fv(glGetUniformLocation(myCustomShader.shaderProgram, "lightSpaceTrMatrix"),
+		1,
+		GL_FALSE,
+		glm::value_ptr(computeLightSpaceTrMatrix()));
+
+	//send view matrix to shader
+	view = myCamera->getViewMatrix();
+	glUniformMatrix4fv(glGetUniformLocation(myCustomShader.shaderProgram, "view"),
+		1,
+		GL_FALSE,
+		glm::value_ptr(view));	
+
+	//compute light direction transformation matrix
+	lightDirMatrix = glm::mat3(glm::inverseTranspose(view));
+	//send lightDir matrix data to shader
+	glUniformMatrix3fv(lightDirMatrixLoc, 1, GL_FALSE, glm::value_ptr(lightDirMatrix));
+
+	glViewport(0, 0, retina_width, retina_height);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	myCustomShader.useShaderProgram();
+
+	//bind the depth map
+	glActiveTexture(GL_TEXTURE3);
+	glBindTexture(GL_TEXTURE_2D, depthMapTexture);
+	glUniform1i(glGetUniformLocation(myCustomShader.shaderProgram, "shadowMap"), 3);
+	
+	//create model matrix for nanosuit
+	model = glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::vec3(0, 1, 0));
+	//send model matrix data to shader	
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+	//compute normal matrix
+	normalMatrix = glm::mat3(glm::inverseTranspose(view*model));
+	//send normal matrix data to shader
+	glUniformMatrix3fv(normalMatrixLoc, 1, GL_FALSE, glm::value_ptr(normalMatrix));
+
+	myModel.Draw(myCustomShader);
+		
+	//draw a white cube around the light
+
+	cameraPosition = myCamera->getCameraPosition();
+	
+	direction.y = lightDir.y;
+	direction.z = lightDir.z;
+	float currentFrame = glfwGetTime();
+	deltaTime = currentFrame - lastFrame;
+	if (deltaTime > 0.037f) {//27hz refresh frate.
+		myCustomShader.useShaderProgram();
+		
+
+		
+		cameraPosition.x += crestereX;
+	
+		cameraPosition.y += crestereZ;
+
+		if (cameraPosition.z > 15.0f) {
+			cameraPosition.z += 0.1f;
+		}
+		
+		if (cameraPosition.x < -100.0f || cameraPosition.x > 27.0f) {
+			
+			crestereX = -crestereX;
+		}
+
+		if (cameraPosition.y <37.0f || cameraPosition.y > 70.0f) {
+			crestereZ = -crestereZ;
+		}
+		
+		printf("QMERA %f %f %f\n", cameraPosition.x, cameraPosition.y, cameraPosition.z);
+		lightDir = direction;
+		lightDirLoc = glGetUniformLocation(myCustomShader.shaderProgram, "lightDir");
+		glUniform3fv(lightDirLoc, 1, glm::value_ptr(lightDir));
+	
+		model = glm::rotate(glm::mat4(1.0f), glm::radians(lightAngle), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, direction);
+		model = glm::scale(model, glm::vec3(1.05f, 1.05f, 1.05f));
+		glUniformMatrix4fv(glGetUniformLocation(lightShader.shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		
+		if (delta < -290.0f || delta > 100.0f) {
+			movementSpeed = -movementSpeed;
+		}
+		printf("%f\n", fogFactor.x);
+		if (fogFactor.x > 0.1f || fogFactor.x < 0.0f) {
+			fogFactorScale = -fogFactorScale;
+		}
+		fogFactor.x += fogFactorScale/25;
+		unghiUfo += 0.1f;
+		delta  -= movementSpeed;
+		direction.x = delta;
+		lastFrame = currentFrame;
+
+		printf("A a X=%f, Y=%f, Z=%f\n", direction.x, direction.y, direction.z);
+		//lightCube.Draw(lightShader);
+	}
+	myCamera->setCameraPosition(cameraPosition);
+	lightShader.useShaderProgram();
+	//for (int i = 0; i < numberOfLights; ++i) {
+	glUniformMatrix4fv(glGetUniformLocation(lightShader.shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
+	model = glm::rotate(glm::mat4(1.0f), glm::radians(lightAngle), glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::translate(model, LightPositions[0]);
+	model = glm::scale(model, glm::vec3(1.05f, 1.05f, 1.05f));
+	glUniformMatrix4fv(glGetUniformLocation(lightShader.shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
+	//printf("%d\n", i);
+	//printf("B b X=%f, Y=%f, Z=%f\n", LightPositions[0].x, LightPositions[0].y, LightPositions[0].z);
+	//lightCube.Draw(lightShader);
+	//}
+
+
+	//culoare
+	lightColor = glm::vec3(1.0f, 1.0f, 1.0f); //white light
+	lightColorLoc = glGetUniformLocation(myCustomShader.shaderProgram, "lightColor");
+	glUniform3fv(lightColorLoc, 1, glm::value_ptr(lightColor));
+	//ptr fog
+	glUniformMatrix4fv(glGetUniformLocation(myCustomShader.shaderProgram, "fogDensity"), 1, GL_FALSE, glm::value_ptr(fogFactor));
+	lightShader.useShaderProgram();
+	glUniformMatrix4fv(glGetUniformLocation(lightShader.shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+
+
+	glUniformMatrix4fv(glGetUniformLocation(lightShader.shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
+
+
+	//ufos
+
+	ufoShader.useShaderProgram();
+	glUniformMatrix4fv(glGetUniformLocation(ufoShader.shaderProgram, "normalMatrix"), 1, GL_FALSE, glm::value_ptr(normalMatrix));
+	glUniformMatrix4fv(glGetUniformLocation(ufoShader.shaderProgram, "lightDirMatrix"), 1, GL_FALSE, glm::value_ptr(lightDirMatrix));
+
+	glUniformMatrix4fv(glGetUniformLocation(ufoShader.shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
+	modelUfo = glm::rotate(glm::mat4(1.0f), glm::radians(unghiUfo), glm::vec3(0.0f, 1.0f, 0.0f));
+	modelUfo = glm::translate(modelUfo, glm::vec3(100.0f, 100.0f, -50.0f));
+	modelUfo = glm::scale(modelUfo, glm::vec3(1.05f, 1.05f, 1.05f));
+	glUniformMatrix4fv(glGetUniformLocation(lightShader.shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(modelUfo));
+	ufo.Draw(ufoShader);
+
+	mySkyBox.Draw(skyboxShader, view, projection);
+}
+	\end{verbatim}
+	
+	\tab \tab \bf{processMovement()} este o functie ce se va apela la fiecare apel de render() aici in functie de butoanele apsate la tastatura se va putea misca lumina, ori sa se treaca in mai multe moduri . Mai multe detalii in capitolul utilizare.\\
+	
+	\begin{verbatim}
+		void processMovement()
+{
+
+	if (pressedKeys[GLFW_KEY_Q]) {
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
+
+	if (pressedKeys[GLFW_KEY_E]) {
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
+
+	if (pressedKeys[GLFW_KEY_R]) {
+		glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+	}
+
+	if (pressedKeys[GLFW_KEY_I]) {
+		myCustomShader.useShaderProgram();
+		lightDir = glm::vec3(sunX, sunY, sunZ++);
+		lightDirLoc = glGetUniformLocation(myCustomShader.shaderProgram, "lightDir");
+		glUniform3fv(lightDirLoc, 1, glm::value_ptr(lightDir));
+	}
+
+	if (pressedKeys[GLFW_KEY_K]) {
+		myCustomShader.useShaderProgram();
+		lightDir = glm::vec3(sunX, sunY, sunZ--);
+		lightDirLoc = glGetUniformLocation(myCustomShader.shaderProgram, "lightDir");
+		glUniform3fv(lightDirLoc, 1, glm::value_ptr(lightDir));
+	}
+
+	if (pressedKeys[GLFW_KEY_U]) {
+		myCustomShader.useShaderProgram();
+		lightDir = glm::vec3(sunX++, sunY, sunZ);
+		lightDirLoc = glGetUniformLocation(myCustomShader.shaderProgram, "lightDir");
+		glUniform3fv(lightDirLoc, 1, glm::value_ptr(lightDir));
+
+	}
+
+	if (pressedKeys[GLFW_KEY_J]) {
+		myCustomShader.useShaderProgram();
+		lightDir = glm::vec3(sunX--, sunY, sunZ);
+		lightDirLoc = glGetUniformLocation(myCustomShader.shaderProgram, "lightDir");
+		glUniform3fv(lightDirLoc, 1, glm::value_ptr(lightDir));
+
+	}
+
+	if (pressedKeys[GLFW_KEY_O]) {
+		myCustomShader.useShaderProgram();
+		lightDir = glm::vec3(sunX, sunY++, sunZ);
+		lightDirLoc = glGetUniformLocation(myCustomShader.shaderProgram, "lightDir");
+		glUniform3fv(lightDirLoc, 1, glm::value_ptr(lightDir));
+
+	}
+
+	if (pressedKeys[GLFW_KEY_L]) {
+		myCustomShader.useShaderProgram();
+		lightDir = glm::vec3(sunX, sunY--, sunZ);
+		lightDirLoc = glGetUniformLocation(myCustomShader.shaderProgram, "lightDir");
+		glUniform3fv(lightDirLoc, 1, glm::value_ptr(lightDir));
+	}
+
+}
+	\end{verbatim}
+
+	\tab \tab \bf{initFBOs()} aceasta functie va initializa framebufferul care va fi folosit la generarea umbrei, prin maparea scenei rezultate ca si textura in framebuffer.\\
+	\begin{verbatim}
+		void initFBOs()
+{
+	//generate FBO ID
+	glGenFramebuffers(1, &shadowMapFBO);
+
+	//create depth texture for FBO
+	glGenTextures(1, &depthMapTexture);
+	glBindTexture(GL_TEXTURE_2D, depthMapTexture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,
+		SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	//float borderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	//glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+	//attach texture to FBO
+	glBindFramebuffer(GL_FRAMEBUFFER, shadowMapFBO);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMapTexture, 0);
+	glDrawBuffer(GL_NONE);
+	glReadBuffer(GL_NONE);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+	\end{verbatim}
+
+	\tab \tab \bf{computeLightSpaceTrMatrix()} aceasta functie va fi folosita pentru a calcula MVP-ul luminii ptr a calcula adancimea.Proiectia luata ortogonala, cea mai buna pentru a reda o umbra de calitate generata de o lumina directionala(cu pozitie la infinit, ca si soarele) Proiectia perspectiva este mai buna pentru generarea umbrelor ptr surse de lumina de tip punctiform, lanterna etc.\\
+	\begin{verbatim}
+	glm::mat4 computeLightSpaceTrMatrix()
+{
+	const GLfloat near_plane = -1.0f, far_plane = 500.0f;
+	glm::mat4 lightProjection = glm::ortho(-50.0f, 50.0f, -50.0f, 50.0f, near_plane, far_plane);
+	projection = glm::perspective(glm::radians(45.0f), (float)retina_width / (float)retina_height, 0.1f, 1000.0f);
+
+	glm::vec3 lightDirTr = glm::vec3(glm::rotate(glm::mat4(1.0f), glm::radians(lightAngle), glm::vec3(0.0f, 1.0f, 0.0f)) * glm::vec4(lightDir, 1.0f));
+	glm::mat4 lightView = glm::lookAt(lightDir, myCamera->getCameraTarget(), glm::vec3(0.0f, 1.0f, 0.0f));
+
+	return lightProjection * lightView;
+}
+	\end{verbatim}
+
+	\tab \tab \bf{keyboardCallback si mouseCallback} aceste functii sunt invocate doar cand cursorul sau butoanele corespunzatoare miscarii camerei sunt apasate. Astfel, sunt transimte date camerei care le prelucreaza intr-o matrice de vedere viewMatrix care va fi folosita mai apoi in recalcularea scenei din noua pozitie si directie a camerei.\\
+
+	\begin{verbatim}
+void keyboardCallback(GLFWwindow* window, int key, int scancode, int action, int mode) {
+	myCamera->keyboardCallback(window, key, scancode, action, mode);
+
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, GL_TRUE);
+
+	if (key >= 0 && key < 1024)
+	{
+		if (action == GLFW_PRESS)
+			pressedKeys[key] = true;
+		else if (action == GLFW_RELEASE)
+			pressedKeys[key] = false;
+	}
+
+	void mouseCallback(GLFWwindow* window, double xpos, double ypos) {
+	myCamera->mouseCallback(window, xpos, ypos);
+}
+	
+}
+\end{verbatim}
+	\tab \tab \bf{animatiile sunt facute pe timp} , calibrandule la 27 de frameuri pe secunda aici obiectele dinamice sunt animate , soarele se deplaseaza si ceata se scaleaza in timp.\\
+	\begin{verbatim}
+		if (deltaTime > 0.037f) {//27hz refresh frate.
+		myCustomShader.useShaderProgram();
+		
+
+		
+		cameraPosition.x += crestereX;
+	
+		cameraPosition.y += crestereZ;
+
+		if (cameraPosition.z > 15.0f) {
+			cameraPosition.z += 0.1f;
+		}
+		
+		if (cameraPosition.x < -100.0f || cameraPosition.x > 27.0f) {
+			
+			crestereX = -crestereX;
+		}
+
+		if (cameraPosition.y <37.0f || cameraPosition.y > 70.0f) {
+			crestereZ = -crestereZ;
+		}
+		
+		printf("QMERA %f %f %f\n", cameraPosition.x, cameraPosition.y, cameraPosition.z);
+		lightDir = direction;
+		lightDirLoc = glGetUniformLocation(myCustomShader.shaderProgram, "lightDir");
+		glUniform3fv(lightDirLoc, 1, glm::value_ptr(lightDir));
+	
+		model = glm::rotate(glm::mat4(1.0f), glm::radians(lightAngle), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, direction);
+		model = glm::scale(model, glm::vec3(1.05f, 1.05f, 1.05f));
+		glUniformMatrix4fv(glGetUniformLocation(lightShader.shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		
+		if (delta < -290.0f || delta > 100.0f) {
+			movementSpeed = -movementSpeed;
+		}
+		printf("%f\n", fogFactor.x);
+		if (fogFactor.x > 0.1f || fogFactor.x < 0.0f) {
+			fogFactorScale = -fogFactorScale;
+		}
+		fogFactor.x += fogFactorScale/25;
+		unghiUfo += 0.1f;
+		delta  -= movementSpeed;
+		direction.x = delta;
+		lastFrame = currentFrame;
+
+		printf("A a X=%f, Y=%f, Z=%f\n", direction.x, direction.y, direction.z);
+		//lightCube.Draw(lightShader);
+	}
+	\end{verbatim}
+	\\	
+	\\
+	\\	
+	\\
+	\tab In shadere treaba sta in felul urmator. In shaderele ptr depth buffer este calculata doar pozitia si fragment shaderul nu este folosit (altceva nu ne intereseaza).
+	\tab In shaderele ptr skybox este calculata pozitia cat si textura care se va mapa pe fete.\\
+	\tab In shaderelul principal al programului va fi calculata pozitia si poz frag , si vor fi transmise mai departe normale fragmentelor coordonatele texturii etc.\\
+	\begin{verbatim}
+		#version 410 core
+
+layout(location=0) in vec3 vPosition;
+layout(location=1) in vec3 vNormal;
+layout(location=2) in vec2 vTexCoords;
+
+out vec3 normal;
+out vec4 fragPosEye;
+out vec4 fragPosLightSpace;
+out vec2 fragTexCoords;
+
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
+uniform mat4 lightSpaceTrMatrix;
+
+void main() 
+{
+	//compute eye space coordinates
+	fragPosEye = view * model * vec4(vPosition, 1.0f);
+	normal = vNormal;
+	fragTexCoords = vTexCoords;
+	fragPosLightSpace = lightSpaceTrMatrix * model * vec4(vPosition, 1.0f);
+	gl_Position = projection * view * model * vec4(vPosition, 1.0f);
+}
+
+	\end{verbatim}
+	\tab 
+\end{itemize}

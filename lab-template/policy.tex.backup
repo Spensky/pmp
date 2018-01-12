@@ -1,0 +1,191 @@
+\chapter{Rules and policies}
+
+
+
+\paragraph{Lab organisation.} 
+
+\begin{center}
+\begin{table}
+\caption{Deliverables}
+\begin{tabular}{|l|p{7cm}|l|l|} \hline
+Deliverable & Description & Pages & Deadline \\ \hline
+Proposal&   Description of your proposed project & (about a page) & $W_5$\\ \hline
+Midway report & Review of related work, details of the proposed method, and preliminary results if available &  4-5 pages. & $W_7$.\\ \hline
+Final report & A full academic paper, including: problem definition and motivation, background and related work, details of the proposed method, details of experiments and results, conclusion and future work, references and appendix & 8 pages & $W_{13}$\\ \hline
+Presentation & Present your work to the collegues, instructors & 10 slides & $W_{13}$\\ \hline
+\end{tabular}
+\label{tab:deliverables}
+\end{table}
+\end{center}
+
+\begin{enumerate}
+ \item Laboratory work is 20\% from the final grade. 
+ \item There are 4 deliverables in total (see Table~\ref{tab:deliverables}).
+\item The schedulling of your work is listed in Table~\ref{tab:first}.
+%\item Tables~\ref{tab:first} and~\ref{tab:second} also bears out nine deadlines that you have to meet for achieving the points. They correspond to the following weeks: $W_2, W_4, W_5, W_6, W_{10}, W_{11}, W_{12}, W_{13}, W_{14}$. After each deadline you will get (or not) the achievable points. 
+\item Before each deadline, you have to send your work (latex documentation/code) at moodle.cs.utcluj.ro
+
+\begin{center}
+\begin{tabular}
+Class: & Introducere in Inteligenta Artificiala\\
+Enrolment key: & Iia-2016-2017\\
+\end{tabular}
+
+\end{center}
+
+
+%where the deadline $WX\in \{W_5, W_7, W_{13}, W_{14}\}$
+\item Realistic and original scenarious are encouraged. Well known toy problems (salesmen, map coloring, logistic planning, wumpus, sudoku, queens, missionaires and canibals, etc.) do not worth much for your grade. 
+Your scenario should be realistic and should be bussiness oriented. That means that you should imagine a real client asking you to perform some investigation in the AI domain.
+Analysing a realistic AI task is complex and can be very
+demanding but all students who put in the time and effort got there eventually.
+Note that the focus is both on programming and on modelling the reality into a formal representation.
+
+\item {\it Laptop policy}: you can use your own laptop as long you have Linux. One goal of the laboratory is to increase your competency in Linux. It is \textbf{your} task to set static IPs:
+\begin{center}
+\begin{tabular}{ll}
+IP: & 192.168.1.51\footnote{Or 52-59: avoid introducing the same IP for two different stations.}\\ 
+MASK:&  255.255.255.0\\
+GATEWAY:&  192.168.1.2\\
+DNS:& 192.168.1.2\\
+PROXY & 192.168.1.2:3128\\
+\end{tabular}
+
+Wifi:
+\begin{tabular}{ll}
+Network: &isg\\
+Password: &inteligentaartificiala\\
+\end{tabular}
+\end{center}
+
+\item {\it Group change policy.} Maximum number of students in a class is 14.
+
+\item {\it AI learning community}. When classes are not schedulled, the AI laboratory is a dedicated physical space for students to socialize in during non-class time. As an undergradute you might meet some eager diploma or master students pursuing their path towards junior AI researchers.
+
+\item {\it For students repeating the class}: A discussion for validating the previous grade is mandatory in the first week. I ussualy have no problem to validate your previous grades, as long you reguest this in the first week. 
+Failing to do so, leads to the grade 1 for the laboratory work in the current semester.}
+
+
+\end{enumerate}
+
+
+
+
+\begin{table}
+\begin{center}
+\caption{Lab schedulling.}
+\begin{tabular}{|p{11cm}|p{1.7cm}|}\hline
+\textbf{Activity} & \textbf{Deadline}  \\ \hline
+{\it Installing the tool.}  & $W_2$ \\ \hline
+{\it Running and understanding examples} attached to each tool.& $W_3$  \\ \hline
+{\it Selecting an adequate scenario} to be implemented using the tool. 
+{\it Describing the specifications} of your own scenario. 
+Describing the top level design of your scenario. & $W_4$  \\ \hline
+{\it Identifying and describing the knowledge bases} (data sets, articles, studies, etc.) planned to be used for realistic modeling of your scenario. & $W_5$ \\ \hline
+{\it Implementing your scenario.} We try to evaluate how much your solution reflects the reality. 
+This is a quantitative criteria: 
+we evaluate how many aspects from real world have been covered by your solution. & $W_{10}$ \\ \hline
+{\it Exploiting the expressivity of the tool.} 
+We try to evaluate how many capabilies provided by the tool have been enacted within your implementation. 
+This is a qualitative criteria: a complex realistic scenario requires more expressivity. & $W_{11}$ \\ \hline
+{\it Validating the correctness/efficiency} of your solution through graphs and/or experiments. & $W_{12}$  \\ \hline
+{\it Comparing your solution with related work.} Illustrate the advantages and weak points of your solution (description and code showing adavantages/disatvantages).  
+{\it Using Latex in your documentation.} You have to show some competency on writing documentation in Latex. 
+For instance, you have to employ various latex elements: lists, citations, footnotes, verbatim, maths, code, etc. & $W_{13}$ \\ \hline
+{\it Individual feedback} provided by the superviser to clarify the good/bad issues related to student activity/results during the semester. & $W_{14}$ \\ \hline 
+\end{tabular}
+\end{center}
+\label{tab:first}
+\end{table}
+
+\paragraph{Grading.}
+Assessment aims to measure your knowledge and skills needed to function in realistic AI-related tasks.
+Assessment is based on your written report explaining the nature of the project, findings, and recommendations. 
+Meeting the deadlines is also important.
+Your report is comparable to ones you would write if you were a consultant reporting to a client.
+
+Grade inflation makes difficult to distinguish between students.
+It also discourages the best students to do their best.
+In my quest for ``optimal ranking of the students``, I do not use the following heuristics:
+
+\begin{itemize}
+ \item "He worked hard at the project``. 
+Our society do not like anymore individuals that are $trying$, but individual that $do$ stuff.
+Such heuristic is not admissible in education, except the primary school.
+
+\item "I knew he chould do much better". 
+Such a heuristic is not admissible because it does not encourage you to spread yourself.
+\end{itemize}
+
+\begin{itemize}
+
+\item 7 means that you: 
+i) constantly worked during classes, 
+ ii) you proved competent to use the tool and its expressivity for a realistic scenario, 
+iii) you understood theoretical concepts on which the tool rely on.
+
+\item 8, 9 mean that your code is large enough and the results proved by your experiments are significant.
+
+ \item 10 means that you did very impressive work or more efficient 
+that I expected or handled a lot of special cases for realistic scenarios.
+
+
+\item 5 means that you managed to develop something of your own, functional, 
+with your own piece of code substantially different from the examples available.
+
+\item You obtain less than 5 in one of the following situations: 
+
+\begin{enumerate}
+\item few code written by yourself.
+\item too much similarity with the provided examples.
+\item non-seriosity (i.e. re-current late at classes, playing games, worked for other disciplines, 
+poor/unprofessional documentation of your work, etc.)\footnote{Consider non-seriosity as a immutable boolean value that 
+is unconsciously activated in my brain when one of the above conditions occurs for the first time.}.
+\end{enumerate}
+
+\item You get 2 if you present the project but fail to submit the documentation or code.
+You get 1 if you do not present your project before the deadline.
+You get 0 for any line of code taken from other parts that appear in section {\it My own code.} 
+For information on TUCN's regulations on plagiarism do consult the active norms.
+
+If your grade is 0, 1, or 2, you do not satisfy 
+the preconditions for participating to the written exam. 
+The only possibility to increase your laboratory grade is to take another project in the next year, 
+at the same class, and to make all the steps again.   
+\end{itemize}
+
+However, don't forget that focus is on learning, not on grading.
+
+\paragraph{Plagiarism.} Most of you consider plagiarism only a minor form of cheating.
+This is far from accurate. Plagiarism is passing off the work of others as your own to gain unfair advantage. 
+
+During your project presentation and documentation, 
+I must not be left with doubts on which parts of your project are your work or not.  
+Always identify both: 
+1) who you worked with and 
+2) where you got your part of the code or solution.
+You should sign the declaration of originality. 
+
+Describe clearly the starting point of your solution.
+List explicitly any code re-used in your project. 
+List explicitly any help (including debugging help, design discussions) provided by others (including colleagues or teaching assistant). 
+Keep in mind that it is your own project and not the teaching assistant's project. 
+Learning by collaborating does remain an effective method. 
+You can use it, but don't forget to mention any kind of support. 
+Learning by exploiting various knowledge-bases developed by your elder collegues remain also an effective mathod for ''learning by example''. 
+When comparing samples of good and poor assignments submitted by your colleagues in earlier years try to identify which is better and why. 
+You can use this repository of previous assignments, but don't forget to mention any kind of inspiration source. 
+
+The assignment is designed to be individual and to pose you some difficulties 
+(both technological and scientific) for which you should identify a working solution by the end of the semester.  
+Each semester, a distinct AI tool is assignned to two students. 
+Your are encouraged to collaborate, especially during the the installation and example understanding phases ($W_1$-$W_4$). The quicker you get throughout these preparatory stages, the more time you have for your own project.
+
+
+\paragraph{Class attendance.} 
+We are all grown-ups, when and whether you attend lecture is up to you\footnote{However, you should be aware that when signing the study contract, you have some moral obligations towards the people that are paying your classes through the Ministery of Education budget.}. 
+Keep in mind the exam can include any topic that was covered during class, explained on the board, 
+or which emerged from discussions among participants. 
+Missing lab assignments or midterm leads to minimum grade for that part.
+You are free to manage your laboratory classes - meaning that you can submit the project earlier -  as long as you meet all the constraints and deadlines.
+However, it is mandatory to participate at the final public presentation of your project. 

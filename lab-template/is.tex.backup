@@ -1,0 +1,644 @@
+\documentclass[a4paper,12pt]{report}
+\usepackage{algorithmic}
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\usepackage[margin=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{listings} 
+\usepackage{graphicx} 
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{mdframed}
+
+\newcommand{\currentdata}{14 February 2015}
+\newtheorem{example}{Example}
+
+\begin{document}
+\vspace{-5cm}
+\begin{center}
+Department of Computer Science\\
+Technical University of Cluj-Napoca\\
+\includegraphics[width=10cm]{fig/footer}
+\end{center}
+\vspace{1cm}
+%\maketitle
+\begin{center}
+\begin{Large}
+ \textbf{Introduction to Artificial Intelligence}\\
+\end{Large}
+\textit{Laboratory activity 2016-2017}\\
+\vspace{3cm}
+Name:\\
+Group:\\
+Email:\\
+\vspace{12cm}
+Assoc. Prof. dr. eng. Adrian Groza\\
+Adrian.Groza@cs.utcluj.ro\\
+\vspace{1cm}
+\includegraphics[width=10cm]{fig/footer}
+\end{center}
+
+\tableofcontents
+
+\input{policy}
+
+%\chapter{Laboratory works}
+
+\chapter{AI projects and tools ($W_1$)}
+\begin{mdframed}[backgroundcolor=blue!20] 
+The teaching objectives for this week are:
+\begin{enumerate}
+ \item To identify existing projects for undergraduate level in the AI domain.
+\item To get awareness of the effort expected for the laboratory activity by browsing past projects at TUCN and other universities.
+\item To get used with the technical instrumentation used during this semester. 
+%That is: i) assigning the AI tool, ii) set your latex environment for writing your final report.
+\end{enumerate}
+\end{mdframed}
+\vspace{0.5cm}
+\begin{mdframed}[backgroundcolor=blue!20] 
+My personal objectives for this class are:
+\begin{enumerate}
+ \item At the beginning of each class, please write what do you expect to learn/achieve/understand/develop during the following two hours.
+\end{enumerate}
+\end{mdframed}
+
+
+An ideal project should be one that demonstrates some creativity, 
+attempts to answer an interesting research question, 
+or offers an interesting AI solution to a real scenario.
+
+\section{AI undergraduate projects}
+This section aims to provide you starting ideas on student AI projects.
+Browse the following resources:  
+\begin{enumerate}
+ \item \href{http://www.akira.ruc.dk/~keld/teaching/projektforslag/ai_projects.pdf}{Project proposals in AI} at Roskilde University, Denmark
+\item \href{http://www.cs.cmu.edu/~./10701/projects.html}{Machine learning project} suggestions at School of Computer Science, Carnegie Mellon University (http://www.cs.cmu.edu/~epxing/Class/10701/project.html)  
+\item Challenges in artificial intelligence domain at \href{https://www.hackerrank.com/domains}{HacckerRank}
+\item Repository of AI assignments at \href{http://modelai.gettysburg.edu/}{AI-repository}
+\item Collection of projects at MIT open coursware for the Knowledge-Based Applications Systems class
+\href{http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-871-knowledge-based-applications-systems-spring-2005/projects/}{MITOpenCoursware}
+\end{enumerate}
+
+The projects are intended to let you look in depth at some area of artificial intelligence 
+that may only be covered briefly in class or AIMA. 
+You can see the AI lab as an opportunity for you to explore an interesting problem of your choice in the context of a real-world scenario.
+Hence, we encourage you to do some original research in the AI domain that is of interest to you. 
+To give you an idea, about how your fellows work as students, take a look at the examples below:
+
+Here is a list of project ideas:
+
+\begin{enumerate}
+ \item A machine learning approach for identifying patterns at Eurovision musical competition. 
+\item Performance comparison of AI algorithms in the Wumpus world.
+\item A multi-agent system for playing the board game Risk. Assess the
+relative strength of each player and the strategic value of each country. 
+\item Intersection situation awareness and normative reasoning.
+\item Summarize an article written in wikipedia or other technical text.
+\item Checking if a small text is entailed by a larger text.
+\item Extracting arguments in a persuasive or legal text.
+\item A knowledge-based computer purchasing adviser.
+\item Build an ontology from a collection of documents using machine learning.
+\item Legal assistant in case of divorces. Splitting marital property between spouse.
+\item Advisor for installing a wind turbine.
+\item Compliance checking of architectural plans for buildings.
+\item Knowledge based system for automobile fault diagnosis .
+\item Real Estate Analyzer System. 
+ 
+\end{enumerate}
+
+ 
+%Sample projects at TUCN are:
+
+%\begin{enumerate}
+% \item 
+%\end{enumerate}
+
+
+Projects at other universities:
+\begin{enumerate}
+ \item A project submitted by Greg Barish entitled "Approaches to integrating abstractions in graphplan-based planning systems" for the Artificial Intelligence Planning class at University of Southern California.
+\href{http://www.isi.edu/~blythe/cs541/Projects/barish.pdf}{Final Report}
+\item A project submitted by Victor L. Williamson entitled ``What to do With a Patient Who Has
+Chest Pain?'' \href{http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-871-knowledge-based-applications-systems-spring-2005/projects/william_cp_ches.pdf}{Final report}
+()
+
+\end{enumerate}
+
+\section{AI-related competitions}
+As part of your laboratory work, we encourage you to participate to various students competitions in AI:
+
+\begin{enumerate}
+\item Machine learning competitions: \href{https://www.kaggle.com/}{Kaggle}
+\item Ontology development competition: \href{http://fois2014.inf.ufes.br/p/call-for-ontology-competition.html}{Ontology Competition}
+\item Competition on computational models of argumentation: \href{http://argumentationcompetition.org/}{ICCMA}
+\item Competitive programming \href{https://www.hackerrank.com/domains}{HacckerRank}
+\item Student StarCraft AI tournament 2016 \href{http://sscaitournament.com/}{SSCAIT}
+\item Power trading agent competition \href{http://www.powertac.org/node/39}{PTAC}
+\item Ontology alignment evaluation initiative \href{http://oaei.ontologymatching.org/2015/}{OAEI2015}
+\end{enumerate}
+
+\paragraph{Disseminating your work.}
+ Presenting your results at student conferences increases your chances to obtain a master scholarship:
+
+\begin{enumerate}
+ \item Computer Science Students Conference at UBB and TUCN: 
+ \href{http://cs.utcluj.ro/csd/site/index.html}{CSSC}
+\end{enumerate}
+
+
+\section{Running latex}
+
+\href{http://cs-gw.utcluj.ro/~srazvan/articleSchema.tgz}{Very Brief Introduction to Latex} by Radu Slavescu
+
+\section{Linux support}
+
+\href{http://cs-gw.utcluj.ro/~srazvan/articleSchema.tgz}{Brief Synopsis of Linux} by Radu Slavescu
+
+
+\chapter{Installing the tool ($W_2$)}
+\begin{mdframed}[backgroundcolor=blue!20] 
+The teaching objectives for this week are:
+\begin{enumerate}
+ \item To install the tool on a Linux system
+\item To get aware of tool plugins, extensions, and running parameters.
+\end{enumerate}
+\end{mdframed}
+\vspace{0.5cm}
+\begin{mdframed}[backgroundcolor=blue!20] 
+My personal objectives for this class are:
+\begin{enumerate}
+ \item \hline
+ \item \hline
+\end{enumerate}
+\end{mdframed}
+
+
+List the performed steps required to run the tool. 
+
+The steps for installation are:
+\begin{verbatim}
+./configure
+make
+make install
+export PATH=PATH:......
+\end{verbatim}
+
+The tool was installed on:
+\begin{verbatim}
+Fedora 14, x86_64
+Java 1.4
+.....
+\end{verbatim}
+
+Running the tool
+\begin{verbatim}
+Fedora 14, x86_64
+Java 1.4
+.....
+\end{verbatim}
+
+
+
+\chapter{Running and understanding examples ($W_3$)}
+\begin{mdframed}[backgroundcolor=blue!20] 
+The teaching objectives for this week are:
+\begin{enumerate}
+ \item To run and understand the toy examples provided by the tool
+\item To identify what realistic problems are adequate for your tool 
+\end{enumerate}
+\end{mdframed}
+\vspace{0.5cm}
+\begin{mdframed}[backgroundcolor=blue!20] 
+My personal objectives for this class are:
+\begin{enumerate}
+ \item \hline
+ \item \hline
+\end{enumerate}
+\end{mdframed}
+
+
+Describe the examples that you run. What type of problems can be supported by the tool?
+ 
+\chapter{Understanding conceptual instrumentation ($W_4$)}
+\begin{mdframed}[backgroundcolor=blue!20] 
+The teaching objectives for this week are:
+\begin{enumerate}
+ \item To understand the algorithm(s) on which your tool relies.
+\item To get used with writing professional algorithms in Latex
+\end{enumerate}
+\end{mdframed}
+
+The following example algorithm has been taken from~\cite{groza2014ontology}.
+
+\begin{algorithm}
+\label{alg:eval}
+\caption{Required steps for AHP-based ontology evaluation.}
+
+\KwIn{$\mathcal{O}$ - set of candidate ontologies; 
+      $\mathcal{W}$ - set of keywords of the domain; 
+      $\mathcal{T}$ - the criteria tree}
+\KwOut{$\langle ontology, [evaluation\ values] \rangle$, association list with ontologies as keys and evaluation values as pairs}
+
+$\mathcal{W_D}\leftarrow Update(\mathcal{W}, Wordnet)$ %\Comment{Wordnet supports the extension of keywords of the domain}
+
+\ForEach{$o\in \mathcal{O}$}{$DomainCoverage(o, \mathcal{W}_D)$} %If results are not satisfactory, improve data at step 1 %TODO formula. 
+
+Define a \textit{domain coverage threshold} $\delta$ $\geq$ 0 
+
+$\mathcal{O}_{\delta} \leftarrow Select(\mathcal{O},\delta)$
+%TODO use algorithm syntax
+
+\ForEach{ $o \in\mathcal{O}_{\delta} $}{
+\ForEach{non-leaf criterion $k \in \mathcal{T}$}{complete the $PC$ matrix to determine the weights of its sub-criteria}
+
+
+\ForEach{leaf (atomic) criterion $k \in \mathcal{T}$}{$OntologyMetrics(k,o)$}
+%TODO alternatives normalization
+
+Normalize ontology measurements to obtain weights for alternatives
+
+$WeightedSum(o,PC)$
+
+}
+\end{algorithm}
+
+
+
+\chapter{Project description ($W_5$)}
+\begin{mdframed}[backgroundcolor=blue!20] 
+The teaching objectives for this week are:
+\begin{enumerate}
+ \item To have a clear description of what you intend to develop.
+\item To point to specific resources (datasets, knowledge bases, external tools) 
+that support the development of your idea and which minimise the risk of failure.
+\item To identify related work (articles) that are relevant or similar to your approach.
+\end{enumerate}
+\end{mdframed}
+\vspace{0.5cm}
+\begin{mdframed}[backgroundcolor=blue!20] 
+My personal objectives for this class are:
+\begin{enumerate}
+ \item \hline
+ \item \hline
+\end{enumerate}
+\end{mdframed}
+
+
+Realistic and original scenarious are encouraged. 
+Well known toy problems (salesmen, map coloring, logistic planning, wumpus, sudoku, queens, missionaires and canibals, etc.) do not worth much for your grade. 
+Your scenario should be realistic and should be business oriented. 
+Note that the focus is both on programming and on modelling the reality into a formal representation.
+
+Consider answering to the following questions:
+\begin{enumerate}
+ \item What will your system do?
+\item Which is the scope of coverage your system aims for?
+\item What will be the input of your program?
+\item What will be the output of your program?
+\item What will be the knowledge of your system?
+\item Which would be the narrative description of running scenario(s)?
+\end{enumerate}
+
+\begin{example}[What will system do]
+ 
+\end{example}
+
+\begin{example}[Scope of the program]
+ 
+\end{example}
+
+
+\section{Narrative description}
+Textual description of your scenario.
+
+\section{Specifications}
+List of specifications.
+
+\section{Top level design of the scenario}
+Technical description of your scenario. 
+In some cases, you may provide a figure with the architecture of the system. 
+
+
+\section{Knowledge acquisition}
+
+\paragraph{How do represent knowledge?} 
+Your system relies on a knowledge base.
+You have to describe how do you represent this knowledge.
+You might choose between different logics: 
+propositional logic, first order logic, modal logics, description logics, epistemic logics, 
+temporal logics, and so on. 
+
+\paragraph{Where are you getting the required knowledge/data}
+Point towards the knowledge bases that you plan to exploit. 
+The existence of these sources are required to prove that your approach is realistic.
+
+Examples of knowledge sources include:
+\begin{itemize}
+\item Data sets: i.e., https://archive.ics.uci.edu/ml/datasets.html 
+\item Statistics: i.e., http://ec.europa.eu/eurostat 
+\item Ontology repositories 
+\end{itemize}
+
+
+
+If you will be using books give their reference. 
+If you hope to exploit people give their names.
+If you aim to use data sources or knowledge repositories list them and be sure that you have 
+access to the needed knowledge. Indicate what you have accomplished so far in knowledge acquisition. 
+
+
+
+\section{Related work}
+You have to identify articles or conference papers relevant to your scenario.
+
+Browse online libraries like Science Direct or Google Scholar. 
+
+Obtain the .bib file of each article that you will rely on. 
+Cite and very briefly describe the main idea of the papers that you have read.
+
+Save the most relevant related papers in a local directory.
+
+The following is an example of \texttt{bib} file:
+
+\begin{verbatim}
+ @article{bench-capon:argumentation-in-ai,
+ author = {Bench-Capon, Trevor J. M.  and Dunne, Paul E. },
+ title = {{A}rgumentation in {A}rtificial {I}ntelligence},
+ journal = {Artificial Intelligence},
+ volume = {171},
+ number = {10-15},
+ year = {2007},
+ issn = {0004-3702},
+ pages = {619--641},
+ doi = {http://dx.doi.org/10.1016/j.artint.2007.05.001},
+ publisher = {Elsevier Science Publishers Ltd.},
+ address = {Essex, UK}
+}
+\end{verbatim}
+
+Don't forget to include the above structure in your .bib file.
+
+\chapter{Implementation details ($W_9$)}
+\begin{mdframed}[backgroundcolor=blue!20] 
+The teaching objectives for this week are:
+\begin{enumerate}
+ \item Illustrate each aspect of the reality that you have modelled in your solution.
+\item To explain the relevant code from your scenario.
+\end{enumerate}
+\end{mdframed}
+\vspace{0.5cm}
+\begin{mdframed}[backgroundcolor=blue!20] 
+My personal objectives for this class are:
+\begin{enumerate}
+ \item \hline
+ \item \hline
+\end{enumerate}
+\end{mdframed}
+
+\section{Relevant code}
+
+Provide the relevant code (see an example in Fig.~\ref{fig:code}).
+
+\begin{figure}
+\begin{verbatim}
+(full-reset)
+(instance a Argument)
+(related a b attacks)
+(concept-instances Argument) 
+\end{verbatim}
+\caption{Modelling arguments in Racer.}
+\label{fig:code} 
+\end{figure}
+
+\section{Common bad practice in AI undergraduate projects}
+
+\paragraph{The over-estimated AI programmer.} $ $
+
+{\it Bad practice}: Excepting few genial students, you tend to overestimate your AI-programming abilities. 
+That is, you start to write a large amount of code. (Here large might be 20 lines).
+When testing it, nothing run. 
+You start to debug a line or to remove it.
+Your program will not run this time too. 
+You remove or comment another line. 
+And so on, until you have a single line of code.
+If you are lucky, that could run. 
+But you lose a lot of time in this enterprise.
+
+{\it Solution}: In the early stage of writing code, write a line of code and test it. 
+If it works, write another line and test it. 
+And so on. 
+That is, you are exploiting the interactive environments provided by 
+AI tools or languages like LISP and PROLOG.
+You should hold your horses and 
+have the most possible skeptical attitude towards your code.  
+As you get experience, your will be noticing that writing 
+AI-declarative code is more effective than procedural one.  
+
+
+\paragraph{The eyewash bug.} $ $
+{\it Bad practice}: You spend most of your programming time to develop a GUI for your AI-system. 
+Don't bother. I am sympathetic with Sania Twain's view on GUIs: "You don't impress me much".
+Such things are indeed important in computer science, but not relevant in this AI class.
+
+
+%\paragraph{The stucker bug} 
+
+\paragraph{The not-organised student.}
+You are not organised, if something like this will happen to you:
+\begin{itemize}
+ \item You do not find your project and yield "Someone removed my project!". 
+Most of the time your are logged with a different user as usual. 
+Check this with \texttt{who am i}. 
+This is not a rhetorical question, but a Linux command.
+\item You are working in a different directory. 
+Type \texttt{pwd} and \texttt{ls} to check that your executables are indeed in the current working directory.
+If you have been lasy to set your PATH variable, you might just forgot to type \texttt{./} 
+for executing the command in the current directory.
+\end{itemize}
+
+
+\chapter{Tool expressivity ($W_{10}$)}
+
+\begin{mdframed}[backgroundcolor=blue!20] 
+The teaching objectives for this week are:
+\begin{enumerate}
+ \item Describe each technical instrumentation provided 
+by the tool that was enacted in your implementation.
+\end{enumerate}
+\end{mdframed}
+\vspace{0.5cm}
+\begin{mdframed}[backgroundcolor=blue!20] 
+My personal objectives for this class are:
+\begin{enumerate}
+ \item \hline
+ \item \hline
+\end{enumerate}
+\end{mdframed}
+
+
+%For instance:
+%{\it "Racer offers also the capability to use {\it rules}. 
+%he code in Fig.~\ref{fig:rules} illustrates my rule used to create instances of type student."}
+
+
+\chapter{Graph and experiments ($W_{11}$)}
+\begin{mdframed}[backgroundcolor=blue!20] 
+The objectives for this week are:
+\begin{enumerate}
+ \item To describe and interpret each experiment that you have performed
+\end{enumerate}
+\end{mdframed}
+\vspace{0.5cm}
+\begin{mdframed}[backgroundcolor=blue!20] 
+My personal objectives for this class are:
+\begin{enumerate}
+ \item \hline
+ \item \hline
+\end{enumerate}
+\end{mdframed}
+
+
+You have to provide print screens with various experiments that you performed. 
+You have to interpret the obtained results.
+
+\begin{figure}
+%\includegraphics[width=8cm]{} 
+Graphs always impress teachers...
+\caption{Increasing the accuracy with the number of samples.}
+\label{fig:accuracy}
+\end{figure}
+
+
+\chapter{Related Work and documentation ($W_{12}$)}
+\begin{mdframed}[backgroundcolor=blue!20] 
+The teaching objectives for this week are:
+\begin{enumerate}
+ \item To compare your results to related work.
+\item To discuss the advantages and limitations of your solution.
+\item To deliver a professional documentation of your work.
+\end{enumerate}
+\end{mdframed}
+\vspace{0.5cm}
+\begin{mdframed}[backgroundcolor=blue!20] 
+My personal objectives for this class are:
+\begin{enumerate}
+ \item \hline
+ \item \hline
+\end{enumerate}
+\end{mdframed}
+
+
+Identify and describe other solutions for solving the same scenario like yours.
+For instance: \cite{chesnevar:Survey2000}
+
+\section{Related approaches}
+
+\section{Advantages and limitations of your solution}
+
+
+\section{Possible extensions of the current work}
+
+From your final report, remove the text/examples/algorithms/rules/bibliographic references/etc - keep only your notes. If the documentation does not meet minimum standard for lisability and scientific discourse, it will be classified by the furious teaching assistant as unacceptable and therefore rejected.
+
+
+\chapter{Results dissemination ($W_{13}$)}
+\begin{mdframed}[backgroundcolor=blue!20] 
+The teaching objectives for this week are:
+\begin{enumerate}
+\item To practice public presentation.
+\item To get used with the beamer template for making scientific presentations
+\end{enumerate}
+\end{mdframed}
+\vspace{0.5cm}
+\begin{mdframed}[backgroundcolor=blue!20] 
+My personal objectives for this class are:
+\begin{enumerate}
+ \item \hline
+ \item \hline
+\end{enumerate}
+\end{mdframed}
+
+10 slides in beamer format for a timeslot of 4 minutes presentation plus 3 minutes questions.
+
+Two introductory tutorials on beamer are~\cite{mertz2005beamer} and~\cite{batts2007beamer}.
+The beamer manual is 
+
+\href{http://cs-gw.utcluj.ro/~srazvan/articleSchema.tgz}{Presentation template}
+
+
+\chapter{Feedback ($W_{14}$)}
+\begin{mdframed}[backgroundcolor=blue!20] 
+The teaching objectives for this week are:
+\begin{enumerate}
+ \item To provide a constructive feedback on the strong/weak points of your performance during AI laboratory. This feedback focus on the scientific relevance of your results and it aims to complement the feedback encapsulated in the grade.
+\end{enumerate}
+\end{mdframed}
+\vspace{0.5cm}
+\begin{mdframed}[backgroundcolor=blue!20] 
+My personal objectives for this class are:
+\begin{enumerate}
+ \item \hline
+ \item \hline
+\end{enumerate}
+\end{mdframed}
+
+
+
+
+\subsection{Self-assessment}
+
+\begin{table}
+\begin{tabular}{ll}
+Aspect & Self-assessment\\ \hline
+How did you manage to master the tool?& \\
+How realistic was your scenario? & \\
+Relevance of the running experiments &\\
+Knowledge and skills achieved & \\ 
+Capacity to market your effort and results through documentation and presentation& \\
+\hline
+\end{tabular}
+\caption{Self-assessment. Assess each aspect, with: enthusiastic, satisfacatory, unsatisfacatory, bad} 
+\end{table}
+
+‘What did you do well? Give examples’
+
+‘Where do you
+think the assignment is weak?’
+
+
+\subsection{Formative feedback}
+The last week is an opportunity for interested students to obtain a formative feedback.
+
+\appendix
+
+\chapter{Your original code}
+
+This section should contain only code developed by you, without any line re-used from other sources. 
+This section helps me to correctly evaluate your amount of work and results obtained. 
+Including in this section any line of code taken from someone else leads to failure of IS class this year.
+
+
+
+\chapter{Quick technical guide for running your project}
+
+Requirments
+
+Step by step technical manual
+
+%\input{mycode}
+
+
+
+\bibliographystyle{plain}
+\bibliography{is}
+
+
+\vspace{2cm}
+\begin{center}
+Intelligent Systems Group\\
+\includegraphics[width=10cm]{fig/footer}
+\end{center}
+
+
+
+\end{document}

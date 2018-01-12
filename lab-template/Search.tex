@@ -1,0 +1,105 @@
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+\graphicspath{ {images/} }
+\paragraph{Depth-first search}
+
+\begin{itemize}
+\item{Question 1}\\
+	\tab This algoritm is by far the worst in finding the optimal solution for pacman, but it has it's strenghts.It is not optimal because, it expands the first of node child and then again expands the first child, without verifing if the other childrens might be a solution and it can stop to a non-optimal solution, found it his long route , which expanded the level of the search tree.\\
+	\tab I have implemented it from the pseudocode in Artificial Intelligence book, at page 82 with some small addings for it to work on autograder. The code for node . I have used a class structure to keep the data of the node, and reused it for every algorithm.
+\includegraphics[scale=0.80]{nodeclass}
+	\tab This is the code for depth-first search algortim. It's core strength is that it's execution time will be fast, ,it's space time will be low,it won't expand many nodes, but the drawback is it is not optimal. \\
+\includegraphics[scale=0.9]{dfs1}
+\end{itemize}
+
+\paragraph{Breadth-first search}
+\begin{itemize}
+\item{Question 2}\\
+	\tab This algoritm is optimal. It can find the best solution possible, but it has some major drawbacks,one of it  is the space complexity. It expands all the neighbours nodes and keeps them in memory making it very difficult, even in mesures of time to give a solution. \footnote{Taking the example from AI book} For example, at depth 16, it will take 350 years for bfs, or any uninformed search to find the solution.\\
+	\tab I have implemented it using the pseudocode given in \footnote{page 82} Ai book and again adding some small changes to work in all the cases of autograder test.\\
+\includegraphics[scale=0.9]{bfs}
+\end{itemize}
+
+\paragraph{Uniform-cost search}
+\begin{itemize}
+\item{Question 3}\\
+
+	\tab This is the first algoritm that keeps count of another attribute in the graph, and that is the costs which will take to go to node A to node B.\footnote{Taking it from Ai book, page 83} Instead of bread-first search ,which will always expand the shallowest unexpanded node, this algoritm will expand the node n with the lowest path of cost g(n).\\
+	\tab I have imeplemented it using the pseudocode provided in \footnote{page 84} Ai book.\\
+
+\includegraphics[scale=0.9]{ucs}
+\end{itemize}
+
+
+\paragraph{A*}
+\begin{itemize}
+\item{Question 4}\\
+
+	\tab The best first-search algoritm is an extension of uniform-cost search in which, beside the cost function g(n),we will keep track of an heuristic function given by us to "help" the algortim find a faster solution with less expanded nodes.The cost function will be f(n) = g(n) + h(n), where we can see that if h(n) our heuristic function will be 0, than the algortim will be like ucs.\\
+	\tab For this algoritm to be optimal, the heuristic function h(n) must be an admissible heuristic.\footnote{Definition taken from AI book, page 94} An admissible heuristic is one that never overestimates the 	cost to reach the goal.In our implementation, I've used the pseudocode from ucs and reworked it by adding the heuristic to the cost function. A simple example to an optimistic heuristic function would be the straight distance from the position where pacman is to the goal. (In our example, we have used manhattanDistance to test the algortim, which is the straight path that pacman can go to the goal, without taking in cosideration the objects that obscure this path, walls ,phantoms etc.\\
+
+\includegraphics[scale=0.9]{astar}
+\end{itemize}
+
+\paragraph{Corners problem}
+\begin{itemize}
+\item{Question 5}\\
+
+	\tab Implementation of Corners Problem, here unlike in our initial problem, we will have a node containing a state formed by a tuple (position, list of corners), an action, and his costs.
+The idea behind it is that, in every state, should our algorithms know when to stop, and the goal condition is to reach the empty corners list. When our pacman travels using different algortims to one corner, it will be removed and it has to travel to the other ones remaining in the list. The method getSuccesors() will return a list of childrens of the node , with their state ,and the list of corners, if  the one children is in the corner, it will remove his position from the corner list.
+
+\includegraphics[scale=0.95]{corners1}\\
+\includegraphics[scale=0.9]{corners2}
+\end{itemize}
+
+
+\paragraph{Corners heuristic}
+\begin{itemize}
+\item{Question 6}\\
+	
+	\tab Using A* algoritm, we want to search better in our maze for the corners and pacman should find the optimal path with the least possible expanded nodes Here, heuristic function comes to play; we know the state of the maze and the starting position of the pacman.\\
+	\tab \footnote{All heuristics implemented were discussed at the laboratory} The first consistent heuristic which i have tested is the number of corners remained to visit. It starts with 4 and for every corner visited it will drop by 1. It isn't very efficient as we can see in the table, it passes only 1/3 on autograder expanded almost 2000 nodes. It is not very strong, we need a more optimistic heuristic!\\
+	\tab The next heuristic I've tested is the minimum path to the closest corner, which will be calculated for every node, in every state.As we can see this heuristic is more optimistic than the number of corners , we have expanded 1475 nodes and we scored 2/3 on autograder.\\
+	\tab The last heuristic, which I have tested succesfully and was admissible was the sum of the minimum path form the node to the closest corner and ,again ,from that corner to the closest one remaining untill there were no more corners. This was the most efficient heuristic that i could find using only manhattanDistance for this porpouse\\
+	\tab \footnote{using while instead of for i had 1186 nodes expanded}I have thought of other heuristics, for example, the corect distance(taking in consideration walls) from the node to the closest corner and so on, calculated with an implemented algorithm, i think that will be much more efficient. Or, to calculate the correct distance from two furthest corners and add it to the correct distance from actual position to the closest one from them two, this should force pacman taking the closest corners in a more efficient way, because the heuristic won't drop in cost that much only if the furthest two corners will be visited, so it will be very optimistic.\\
+
+\begin{table}
+\begin{center}
+\caption{Results}
+\begin{tabular}{|p{9cm}lp{3cm}|p{2cm}|}\hline
+\textbf{Heuristic}&\textbf{Path Length} & \textbf{Expanded}  \\ \hline
+{\it Number of corners remaining}  & $106$  & $1908$\\ \hline
+{\it Minimum path to closest node} & $106$ & $1475$  \\ \hline
+{\it Minimum path to closest node and repeat} & $106$ & $692$  \\ \hline
+\end{tabular}
+\end{center}
+\label{tab:first}
+\end{table}
+
+\includegraphics[scale=0.9]{cornersHeuristics}
+\end{itemize}
+
+\paragraph{Food problem}
+\begin{itemize}
+\item{Question 7}\\
+
+	\tab The food problem is somehow more complicated than the corners problem. We are using A* again and hte heuristics are somehow identical to the corners ones.\\
+	\tab Again, the first heuristic which i have tested was the number of food remaining. Because the numbe rof food cells is somehow high, it can be a good heuristic, guiding our pacman.The results shows 12517 nodes expanded. We already have 2/5 in autograder.\\
+	\tab Then, i have tested the minimum aprox distance from current position to the closest food.This heuristic should come as no suprise that is worse than the first one.Because of the number of food cells, the first heuristic is stronger than the manhattanDistance from current postion to the closest food cell. Let me explain,when we have more food cells close together the first heuristic is still pretty high, close to "reality", counting all the food, but the closest distance to food ,would be almost every time close to 0, so not very optimistical.\\ 
+	\tab This made me think of a combination of these two, which could be more efficient, like when the distance is higher than a number to the closest food , go by manhattan because is more optimistically, and when is less ,it should go by number of food. Of course this can be adjusted to grouping the food cells in small areas and calculate the most efficient path by walking throw the smallest ones first, so the number of food stay high  and second heuristic will remain optimistic.I have tried to implement it  but failed so many times...\\
+	\tab The next heuristic would be the sum of the minimum path to the closest food from starting position and then the minimum path from that food to the other closest food and repeat, like in cornerProblem.This brought me 4/4 on autograder with 8881 nodes expanded.\\
+
+\begin{table}
+\begin{center}
+\caption{Results}
+\begin{tabular}{|p{11cm}|p{2cm}|}\hline
+\textbf{Heuristic} &\textbf{Expanded}  \\ \hline
+{\it Number of food cells remaining}  & $12517$\\ \hline
+{\it Minimum path to closest node} & $13898$  \\ \hline
+{\it Minimum path to closest node and repeat} & $8881$  \\ \hline
+\end{tabular}
+\end{center}
+\label{tab:first}
+\end{table}
+
+\includegraphics[scale=0.9]{food}
+\end{itemize}

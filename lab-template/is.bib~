@@ -1,0 +1,1223 @@
+
+@article{mertz2005beamer,
+  title={Beamer by example},
+  author={Mertz, Andrew and Slough, William},
+  journal={The PracTEX Journal},
+  volume={4},
+  year={2005}
+}
+
+
+
+@incollection{sun2010formal,
+  title={A formal pattern architecture for safe medical systems},
+  author={Sun, Mu and Meseguer, Jos{\'e} and Sha, Lui},
+  booktitle={Rewriting Logic and Its Applications},
+  pages={157--173},
+  year={2010},
+  publisher={Springer}
+}
+
+@incollection{Meditech2009,
+year={2009},
+isbn={978-3-642-04291-1},
+booktitle={Int. Conf. on Advancements of Medicine and Health Care through Technology},
+volume={26},
+series={IFMBE Proceedings},
+editor={Vlad, Simona and Ciupa, RaduV. and Nicu, AncaI.},
+doi={10.1007/978-3-642-04292-8_9},
+title={Digital Simulation for Computer Control of Radiological Devices: A
+Preliminary Model Using Partial Differential Equations},
+url={http://dx.doi.org/10.1007/978-3-642-04292-8_9},
+publisher={Springer Berlin Heidelberg},
+keywords={Radiation conduction and therapy; distributed parameters;
+partial derivatives; radiological equipment},
+author={Roman, N.M. and Colosi, H. and Pusca, M.},
+pages={37-42}
+}
+
+@incollection{Meditech2011,
+year={2011},
+isbn={978-3-642-22585-7},
+booktitle={Int. Conf. on Advancements of Medicine and Health Care through Technology},
+volume={36},
+series={IFMBE Proceedings},
+editor={Vlad, Simona and Ciupa, RaduV.},
+doi={10.1007/978-3-642-22586-4_9},
+title={Database External Level Architecture for Use in Healthcare
+Information Systems},
+url={http://dx.doi.org/10.1007/978-3-642-22586-4_9},
+publisher={Springer Berlin Heidelberg},
+keywords={healthcare information systems; database; user interface},
+author={Olah, P. and Dobru, D. and Ciupa, R.V. and Marusteri, M. and
+Bacarea, V. and Muji, M.},
+pages={36-39}
+}
+
+@incollection{sun2010formal,
+  title={A formal pattern architecture for safe medical systems},
+  author={Sun, Mu and Meseguer, Jos{\'e} and Sha, Lui},
+  booktitle={Rewriting Logic and Its Applications},
+  pages={157--173},
+  year={2010},
+  publisher={Springer}
+}
+
+@article{fu2013controlling,
+  title={Controlling for cybersecurity risks of medical device software},
+  author={Fu, Kevin and Blum, James},
+  journal={Communications of the ACM},
+  volume={56},
+  number={10},
+  pages={35--37},
+  year={2013},
+  publisher={ACM}
+}
+
+@inproceedings{kim2011safety,
+  title={Safety-assured development of the gpca infusion pump software},
+  author={Kim, BaekGyu and Ayoub, Anaheed and Sokolsky, Oleg and Lee, Insup and Jones, Paul and Zhang, Yi and Jetley, Raoul},
+  booktitle={Proceedings of the ninth ACM international conference on Embedded software},
+  pages={155--164},
+  year={2011},
+  organization={ACM}
+}
+
+@incollection{ayoub2012safety,
+  title={A safety case pattern for model-based development approach},
+  author={Ayoub, Anaheed and Kim, BaekGyu and Lee, Insup and Sokolsky, Oleg},
+  booktitle={NASA Formal Methods},
+  pages={141--146},
+  year={2012},
+  publisher={Springer}
+}
+
+% ================================================================
+@article{ajg-grs:delp,
+    author= {A. Garc\'{\i}a and G. Simari},
+    title=  {{D}efeasible {L}ogic {P}rogramming An {A}rgumentative {A}pproach},
+    year=   {2004},
+    volume = 4,
+    number = 1,
+    journal = {Theory and Prac. of Logic Program.},
+    pages = {95-138}
+}
+% ================================================================
+@ARTICLE{chesnevar:Survey2000,
+  AUTHOR = "Carlos Iv{\'a}n Ches{\~n}evar and
+            Ana Maguitman and Ronald Loui",
+  TITLE = "{L}ogical {M}odels of {A}rgument",
+  JOURNAL = "ACM Computing Surveys",
+  PUBLISHER = {ACM},
+  YEAR = 2000,
+  volume = 32,
+  number = 4,
+  month = dec,
+  pages = {337-383}
+}
+% ================================================================
+@article{Simari92,
+  title = "{A} {M}athematical {T}reatment of {D}efeasible
+          {R}easoning and its {I}mplementation",
+  author = "G. Simari and R. Loui",
+  journal = "Artificial Intelligence",
+  volume=53,
+  pages="125-157",
+  year  = 1992}
+% ================================================================
+
+
+@string{UNKNOWN = "UNKNOWN"}
+
+@inproceedings{Braband12,
+  author    = {Jens Braband},
+  title     = {A Risk-based Approach towards Assessment of Potential Safety
+               Deficiencies},
+  booktitle = {SSS},
+  year      = {2012},
+  pages     = {209-223},
+  ee        = {http://dx.doi.org/10.1007/978-1-4471-2494-8_15},
+  crossref  = {DBLP:conf/scss/2012},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@proceedings{DBLP:conf/scss/2012,
+  editor    = {Chris Dale and
+               Tom Anderson},
+  title     = {Achieving Systems Safety - Proceedings of the Twentieth
+               Safety-Critical Systems Symposium, SSS 2012, Bristol, UK,
+               February 7-9, 2012},
+  booktitle = {SSS},
+  publisher = {Springer},
+  year      = {2012},
+  isbn      = {978-1-4471-2493-1},
+  ee        = {http://dx.doi.org/10.1007/978-1-4471-2494-8},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+
+@inproceedings{PalinH10,
+  author    = {Robert Palin and
+               Ibrahim Habli},
+  title     = {Assurance of Automotive Safety - A Safety Case Approach},
+  booktitle = {SAFECOMP},
+  year      = {2010},
+  pages     = {82-96},
+  ee        = {http://dx.doi.org/10.1007/978-3-642-15651-9_7},
+  crossref  = {DBLP:conf/safecomp/2010},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@proceedings{DBLP:conf/safecomp/2010,
+  editor    = {Erwin Schoitsch},
+  title     = {Computer Safety, Reliability, and Security, 29th International
+               Conference, SAFECOMP 2010, Vienna, Austria, September 14-17,
+               2010. Proceedings},
+  booktitle = {SAFECOMP},
+  publisher = {Springer},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {6351},
+  year      = {2010},
+  isbn      = {978-3-642-15650-2},
+  ee        = {http://dx.doi.org/10.1007/978-3-642-15651-9},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+
+@inproceedings{Reed07,
+  author    = {Reed, C. and Walton, D.},
+  title     = {Argumentation schemes in dialogue},
+  booktitle = {OSSA},
+  year      = {2007},
+  pages = 	{1-11},
+  editor        = {H.V. Hansen, et. al}
+}
+
+@inproceedings{Artemov05,
+ author = {Artemov, Sergei and Nogina, Elena},
+ title = {On epistemic logic with justification},
+ booktitle = {Proceedings of the 10th conference on Theoretical aspects of rationality and knowledge},
+ series = {TARK '05},
+ year = {2005},
+ isbn = {981-05-3412-4},
+ location = {Singapore},
+ pages = {279--294},
+ numpages = {16},
+} 
+
+@inproceedings{Modgil06,
+  author    = {Sanjay Modgil},
+  title     = {Hierarchical Argumentation},
+  booktitle = {JELIA},
+  year      = {2006},
+  ee        = {http://dx.doi.org/10.1007/11853886_27},
+  crossref  = {DBLP:conf/jelia/2006},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@proceedings{DBLP:conf/jelia/2006,
+  editor    = {Michael Fisher and
+               Wiebe van der Hoek and
+               Boris Konev and
+               Alexei Lisitsa},
+  title     = {Logics in Artificial Intelligence, 10th European Conference,
+               JELIA 2006, Liverpool, UK, September 13-15, 2006, Proceedings},
+  booktitle = {JELIA},
+  publisher = {Springer},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {4160},
+  year      = {2006},
+  isbn      = {3-540-39625-X},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+
+@article{RahwanZR07,
+  author    = {Iyad Rahwan and
+               Fouad Zablith and
+               Chris Reed},
+  title     = {Laying the foundations for a World Wide Argument Web},
+  journal   = {Artif. Intell.},
+  volume    = {171},
+  number    = {10-15},
+  year      = {2007},
+  pages     = {897-921}
+}
+
+@Book{Walton08,
+author = {Douglas Walton and Chris Reed and Fabrizio Macagno},
+title = {Argumentation Schemes},
+publisher = {Cambridge University Press},
+year = {2008},
+
+}
+
+
+@Book{Kuhn91,
+ALTauthor = {Kuhn D.},
+ALTeditor = {},
+title = {The Skills of Argument},
+publisher = {Cambridge University Press},
+year = {1991},
+OPTkey = {},
+OPTvolume = {},
+OPTnumber = {},
+OPTseries = {},
+OPTaddress = {},
+OPTedition = {},
+OPTmonth = {},
+OPTnote = {},
+OPTannote = {}
+}
+
+@article{Reed200622,
+
+title = "Representing dialogic argumentation",
+
+journal = "Knowledge-Based Systems",
+
+volume = "19",
+
+number = "1",
+
+pages = "22 - 31",
+
+year = "2006",
+
+note = "",
+
+issn = "0950-7051",
+
+
+author = "Chris Reed",
+
+keywords = "Argumentation",
+
+keywords = "Dialogue",
+
+keywords = "XML"
+
+}
+
+
+
+
+
+
+@article{Artemov20064,
+
+title = "Justified common knowledge",
+
+journal = "Theoretical Computer Science",
+
+volume = "357",
+
+number = "1-3",
+
+pages = "4 - 22",
+
+year = "2006",
+
+note = "Clifford Lectures and the Mathematical Foundations of Programming Semantics",
+
+issn = "0304-3975",
+
+
+author = "Sergei Artemov",
+
+keywords = "Epistemic logic",
+
+keywords = "Common knowledge",
+
+keywords = "Justification",
+
+keywords = "Logic of proofs"
+
+}
+
+
+
+@article{AlsinetCGS08,
+  author    = {Teresa Alsinet and
+               Carlos Iv{\'a}n Ches{\~n}evar and
+               Lluis Godo and
+               Guillermo Ricardo Simari},
+  title     = {A logic programming framework for possibilistic argumentation:
+               Formalization and logical properties},
+  journal   = {Fuzzy Sets and Systems},
+  volume    = {159},
+  number    = {10},
+  year      = {2008},
+  pages     = {1208-1228},
+  ee        = {http://dx.doi.org/10.1016/j.fss.2007.12.013},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@inproceedings{CohenGS10,
+  author    = {Andrea Cohen and
+               Alejandro Javier Garc\'{\i}a and
+               Guillermo Ricardo Simari},
+  title     = {Extending DeLP with Attack and Support for Defeasible Rules},
+  booktitle = {IBERAMIA},
+  year      = {2010},
+  pages     = {90-99},
+  ee        = {http://dx.doi.org/10.1007/978-3-642-16952-6_10},
+  crossref  = {DBLP:conf/iberamia/2010},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@proceedings{DBLP:conf/iberamia/2010,
+  editor    = {{\'A}ngel Fernando Kuri Morales and
+               Guillermo Ricardo Simari},
+  title     = {Advances in Artificial Intelligence - IBERAMIA 2010, 12th
+               Ibero-American Conference on AI, Bah\'{\i}a Blanca, Argentina,
+               November 1-5, 2010. Proceedings},
+  booktitle = {IBERAMIA},
+  publisher = {Springer},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {6433},
+  year      = {2010},
+  isbn      = {978-3-642-16951-9},
+  ee        = {http://dx.doi.org/10.1007/978-3-642-16952-6},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+
+@inproceedings{LetiaG10,
+  author    = {Ioan Alfred Letia and
+               Adrian Groza},
+  title     = {Towards Pragmatic Argumentative Agents within a Fuzzy Description Logic Framework},
+  booktitle = {ArgMAS, Toronto, Canada},
+  year      = {2010},
+  pages     = {},
+}
+
+@inproceedings{Horridge10iswc,
+  author    = "Horridge, Matthew and Parsia, Bijan and Sattler, Ulrike",
+  title     = "Justification Oriented Proofs in {OWL}",
+  booktitle = "International Semantic Web Conference",
+  year      = {2010},
+}
+
+@incollection{Fit09TL,
+  author = {Melvin Fitting},
+  title = {Reasoning with Justifications},
+  booktitle = {Towards Mathematical Philosophy, Papers from the {S}tudia {L}ogica conference {T}rends in {L}ogic{~IV}},
+  publisher = {Springer},
+  volume = {28},
+  year = {2009},
+  editor = {David Makinson and Jacek Malinowski and Heinrich Wansing},
+  series = {Trends in Logic},
+  chapter = {6},
+  pages = {107--123},
+  conference = {http://www.logika.umk.pl/TrendsIV.html},
+  pdf = {http://comet.lehman.cuny.edu/fitting/bookspapers/pdf/papers/ReasoningJustifications.pdf},
+  doi = {10.1007/978-1-4020-9084-4_6},
+  keywords = {logic of knowledge, justification logic, modal logic},
+  note = {Published online November~2008},
+ }
+
+
+@inproceedings{Grossi10,
+  author    = {Davide Grossi},
+  title     = {On the logic of argumentation theory},
+  booktitle = {AAMAS},
+  pages     = {409-416},
+  ee        = {http://doi.acm.org/10.1145/1838206.1838264},
+  crossref  = {DBLP:conf/atal/2010},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@proceedings{DBLP:conf/atal/2010,
+  editor    = {Wiebe van der Hoek and
+               Gal A. Kaminka and
+               Yves Lesp{\'e}rance and
+               Michael Luck and
+               Sandip Sen},
+  title     = {9th International Conference on Autonomous Agents and Multiagent
+               Systems (AAMAS 2010), Toronto, Canada, May 10-14, 2010,
+               Volume 1},
+  booktitle = {AAMAS},
+  publisher = {IFAAMAS},
+  year      = {2010},
+  isbn      = {978-0-9826571-1-9},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@article{Yavorskaya08,
+  author    = {Tatiana Yavorskaya},
+  title     = {Interacting Explicit Evidence Systems},
+  journal   = {Theory of Computer Systems},
+  volume    = {43},
+  year      = {2008},
+  pages     = {272-293},
+}
+
+
+@article{PAGLIERI10,
+  author    = {Fabio Paglieri and Cristiano CastelFranchi},
+  title     = {Why arguing? Towards a cost-benefit analysis of argumentation},
+  journal   = {Argument and Computation},
+  volume    = {1},
+  number    = {1},
+  year      = {2010},
+  pages     = {71-91},
+}
+
+@article{Kalyanpur06,
+  author    = {Aditya Kalyanpur and Bijan Parsia and Bernardo Cuenca Grau and Evren
+Sirin},
+  title     = {Justifications for Entailments in Expressive Description
+Logics},Douglas Walton, Chris Reed, and Fabrizio Macagno, Argumentation Schemes, Cambridge University Press, 2008, 443pp., $32.99 (pbk), ISBN 9780521723749. 
+  journal   = {??},
+  volume    = {??},
+  number    = {??},
+  year      = {2006},
+  pages     = {??},
+ 
+}
+
+
+@inproceedings{Renne2009,
+ author = {Renne, Bryan},
+ title = {Evidence elimination in multi-agent justification logic},
+ booktitle = {Proceedings of the 12th Conference on Theoretical Aspects of Rationality and Knowledge},
+ series = {TARK '09},
+ year = {2009},
+ isbn = {978-1-60558-560-4},
+ location = {California},
+ pages = {227--236},
+ numpages = {10},
+  acmid = {1562845},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+} 
+
+@inproceedings{Walton07,
+  author    = {Douglas Walton and David M. Godden},
+  title     = {Redefining Knowledge in a Way Suitable for Argumentation
+Theory},
+  booktitle = {Dissensus and the Search for Common Ground},
+  editor =    {H.V. Hansen},
+  year      = {2007},
+  pages     = {1-13},
+}
+
+@techreport{Art08TRb,
+  author = {Sergei [N.] Artemov},
+  title = {Why Do We Need {J}ustification {L}ogic?},
+  institution = {{CUNY} {P}h.{D}. {P}rogram in {C}omputer {S}cience},
+  year = {2008},
+  number = {TR--2008014},
+  month = sep,
+  http = {http://tr.cs.gc.cuny.edu/tr/techreport.php?id=366},
+  pdf = {http://tr.cs.gc.cuny.edu/tr/files/TR-2008014.pdf},
+  abstract = {In this paper, we will sketch the basic system of Justification Logic,
+                    which is a general logical framework for reasoning about epistemic justification.
+                    Justification Logic renders a new, evidence-based foundation for epistemic logic.
+                    As a case study, we compare formalizations of the Kripke `Red Barn' scenario in modal epistemic logic and Justification Logic and
+                    show here that the latter provides a deeper analysis.
+                    In particular, we argue that modal language fails to fully represent the epistemic closure principle
+                    whereas Justification Logic provides its adequate formalization.}
+}
+
+@inproceedings{Bench-CaponG09,
+  author    = {Bench-Capon, Trevor J. M.  and Gordon, Thomas F.},
+  title     = {Isomorphism and argumentation},
+  booktitle = {Twelfth International Conference on Artificial Intelligence and Law},
+  year      = {2009},
+  pages     = {11-20},
+}
+
+@incollection {Besnard09,
+   author = {Besnard, Philippe and Hunter, Anthony},
+   affiliation = {Universite Paul Sabatier IRIT Toulouse France},
+   title = {Argumentation Based on Classical Logic},
+   booktitle = {Argumentation in Artificial Intelligence},
+   editor = {Simari, Guillermo and Rahwan, Iyad},
+   isbn = {978-0-387-98197-0},
+   pages = {133-152},
+   year = {2009}
+
+}
+
+
+
+@inproceedings{MoguillanskyRFS09,
+  author    = {Mart\'{\i}n O. Moguillansky and
+               Nicol{\'a}s D. Rotstein and
+               Marcelo A. Falappa and
+               Guillermo Ricardo Simari},
+  title     = {Generalized Abstract Argumentation: Handling Arguments in
+               FOL Fragments},
+  booktitle = {ECSQARU},
+  year      = {2009},
+  pages     = {144-155},
+  ee        = {http://dx.doi.org/10.1007/978-3-642-02906-6_14},
+  crossref  = {DBLP:conf/ecsqaru/2009},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@proceedings{DBLP:conf/ecsqaru/2009,
+  editor    = {Claudio Sossai and
+               Gaetano Chemello},
+  title     = {Symbolic and Quantitative Approaches to Reasoning with Uncertainty,
+               10th European Conference, ECSQARU 2009, Verona, Italy, July
+               1-3, 2009. Proceedings},
+  booktitle = {ECSQARU},
+  publisher = {Springer},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {5590},
+  year      = {2009},
+  isbn      = {978-3-642-02905-9},
+  ee        = {http://dx.doi.org/10.1007/978-3-642-02906-6},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+
+@article{Bench-CaponD07,
+  author    = {Bench-Capon, Trevor J. M. and Dunne, Paul E.},
+  title     = {Argumentation in artificial intelligence},
+  journal   = {Artificial Intelligence},
+  volume    = {171},
+  number    = {10-15},
+  year      = {2007},
+  pages     = {619-641},
+}
+
+@article{Dung95,
+  author    = {Dung, Phan Minh},
+  title     = {On the acceptability of arguments and its fundamental role in 
+               nonmonotonic reasoning, logic programming and n-person games.},
+  journal   = {Artif. Intell.},
+  volume    = {77},
+  number    = {},
+  year      = {1995},
+  pages     = {321-357}
+}
+
+@article{Gomez10AAI,
+  author    = {Gomez, Sergio Alejandro  and Ches{\~n}evar, Carlos Iv{\'a}n and
+               Guillermo Ricardo},
+  title     = {Reasoning with inconsistent ontologies through argumentation},
+  journal   = aai,
+  volume    = {24},
+  year      = {2010},
+  pages     = {102--148},
+}
+
+@inproceedings{Hunter07,
+  author    = {Hunter, Anthony},
+  title     = {Real Arguments Are Approximate Arguments},
+  booktitle = {Proceedings of the 22nd national conference on Artificial Intelligence},
+  year      = {2007},
+  pages     = {66-71},
+}
+
+@inproceedings{Vermier08,
+  author    = {Janssen, Jeroen and De Cock, Martine and Vermier, Dirk},
+  title     = {Fuzzy Argumentation Frameworks},
+  booktitle = {12th International Conference on Information Processing and Management of Uncertainty in Knowledge-Based Systems},
+  year      = {2008},
+  pages     = {513-520},
+}
+
+@inproceedings{Modgil06,
+  author    = {Modgil, Sanjay},
+  title     = {Hierarchical Argumentation},
+  booktitle = {10th European Conference on Logics in Artificial Intelligence},
+  year      = {2006},
+  pages     = {319-332},
+}
+
+@article{Modgil09,
+  author    = {Modgil, Sanjay},
+  title     = {Reasoning about preferences in argumentation frameworks},
+  journal   = {Artificial Intelligence},
+  volume    = {173},
+  number    = {9-10},
+  year      = {2009},
+  pages     = {901-934},
+}
+
+@article{RahwanZR07,
+  author    = {Rahwan, Iyad and Zablith, Fouad and Reed, Chris},
+  title     = {Laying the foundations for a {W}orld {W}ide {A}rgument {W}eb},
+  journal   = {Artificial Intelligence},
+  volume    = {171},
+  number    = {10-15},
+  year      = {2007},
+  pages     = {897-921},
+}
+
+@inproceedings{Dunne09,
+  author    = {Dunne, Paul and Hunter, Anthony and McBurney, Peter and
+               Parsons, Simon and Wooldridge, Michael},
+  title     = {Inconsistency Tolerance in Weighted Argument Systems},
+  booktitle = {The Ninth International Conference on Autonomous Agents and Multiagent Systems},
+  year      = {2009},
+  pages     = {851-858},
+}
+
+@inproceedings{Bobillo08a,
+Author = {Bobillo, Fernando and Straccia, Umberto}, 
+ Booktitle = {International Conference on Fuzzy Systems, Hong Kong},  
+ Publisher = {IEEE Computer Society}, 
+ Title = {fuzzy{DL}: An Expressive Fuzzy Description Logic Reasoner},
+pages = {923--930}, 
+ Year = {2008}
+}
+
+@inproceedings{RahwanB08,
+  author    = {Rahwan, Iyad and Banihashemi, Bita},
+  title     = {Arguments in {OWL}: A Progress Report},
+  booktitle = {Second International Conference on Computational Models of Argument},
+  year      = {2008},
+  pages     = {297-310},
+}
+
+@article{Pollock01,
+ author = {Pollock, John L.},
+ title = {Defeasible reasoning with variable degrees of justification},
+ journal = {Artificial Intelligence},
+ volume = {133},
+ number = {1-2},
+ year = {2001},
+ }
+
+@inproceedings{Modgil07,
+  author    = {Modgil, Sanjay and McGinnis,Jarred},
+  title     = {Towards Characterising Argumentation Based Dialogue in the
+               Argument Interchange Format},
+  booktitle = {Fourth International Workshop on Argumentation in Multi-Agent Systems},
+  year      = {2007},
+  pages     = {80-93},
+}
+
+@inproceedings{Madakkatel09,
+  author    = {Madakkatel, M. I. and Rahwan, I. and Bonnefon, J. F. and 
+               Awan, R. N. and Abdallah,  S.},
+  title     = {Formal Argumentation and Human Reasoning: The Case of Reinstatement},
+  booktitle = {Proceedings of the AAAI Fall Symposium on The Uses of Computational Argumentation, Washington DC, USA},
+   year      = {2009},
+pages = {46-51},
+}
+
+@article{BoellaGTV09,
+  author    = {Boella, Guido and Gabbay, Dov M. and
+               van der Torre, Leendert and Villata, Serena},
+  title     = {Meta-Argumentation Modelling I: Methodology and Techniques},
+  journal   = {Studia Logica},
+  volume    = {93},
+  number    = {2-3},
+  year      = {2009},
+  pages     = {297-355},
+}
+
+@article{Straccia01,
+  author    = {Straccia, Umberto},
+  title     = {Reasoning within fuzzy description logics},
+  journal   = {Journal of Artificial Intelligence Research},
+  volume    = {14},
+  number    = {},
+  year      = {2001},
+  pages     = {137-166},
+}
+
+@article{Pollock02,
+  author    = {Pollock, John},
+  title     = {Defeasible reasoning with variable degrees of justification},
+  journal   = {Artificial Intelligence},
+  volume    = {133},
+  number    = {},
+  year      = {2002},
+  pages     = {233-282},
+}
+
+@Book{Codex,
+ author       = "Food and Agriculture Organisation of the United Nations World Health Organization",
+ title = 	"Codex Alimentarus",
+ year         = "1997",
+}
+
+
+@article{Chung08,
+ author = {Chung, Paul and Cheung, Larry and Machin, Colin},
+ title = {Compliance Flow - Managing the compliance of dynamic and complex processes},
+ journal = {Know.-Based Syst.},
+ issue_date = {May, 2008},
+ volume = {21},
+ number = {4},
+ month = may,
+ year = {2008},
+ issn = {0950-7051},
+ pages = {332--354},
+ numpages = {23},
+ url = {http://dx.doi.org/10.1016/j.knosys.2007.11.002},
+ doi = {10.1016/j.knosys.2007.11.002},
+ acmid = {1367165},
+ publisher = {Elsevier Science Publishers B. V.},
+ address = {Amsterdam, The Netherlands, The Netherlands},
+ keywords = {Automated compliance checks, Model of standards, Workflow management systems},
+} 
+
+
+
+@incollection {Lewis09,
+   author = {Lewis, Robert},
+   affiliation = {IntelleQ Ltd Worthing, UK UK},
+   title = {Safety Case Development as an Information Modelling Problem},
+   booktitle = {Safety-Critical Systems: Problems, Process and Practice},
+   editor = {Dale, Chris and Anderson, Tom},
+   publisher = {Springer London},
+   isbn = {978-1-84882-349-5},
+   keyword = {Computer Science},
+   pages = {183-193},
+  year = {2009}
+}
+
+@Inproceedings{Simula10,
+  author = {Panesar-Walawege, Rajwinder Kaur and Briand, Lionel and Sabetzadeh, Mehrdad and Coq, Thierry},
+  title = "Characterizing the Chain of Evidence for Software Safety Cases: A Conceptual Model Based on the IEC 61508 Standard",
+  year = {2010},
+  booktitle = {Third IEEE International Conference on Software Testing, Verification and Validation (ICST)},
+  editor = {Marie-Claude Gaudel and Ana Rosa Cavalli and Sudipto Ghosh},
+  publisher = {IEEE Computer Society},
+  isbn = {978-0-7695-3990-4}
+}
+
+
+@book{GSN12,
+ title={GSN - The Goal Structuring Notation: A Structured Approach to Presenting Arguments},
+author={John Spriggs},
+year={2012},
+publisher={Springer}
+}
+
+@inproceedings{ApplebaumLRP12,
+  author    = {Andy Applebaum and
+               Karl N. Levitt and
+               Jeff Rowe and
+               Simon Parsons},
+  title     = {Arguing About Firewall Policy},
+  booktitle = {COMMA},
+  year      = {2012},
+  pages     = {91-102},
+  ee        = {http://dx.doi.org/10.3233/978-1-61499-111-3-91},
+  crossref  = {DBLP:conf/comma/2012},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@proceedings{DBLP:conf/comma/2012,
+  editor    = {Bart Verheij and
+               Stefan Szeider and
+               Stefan Woltran},
+  title     = {Computational Models of Argument - Proceedings of COMMA
+               2012, Vienna, Austria, September 10-12, 2012},
+  booktitle = {COMMA},
+  publisher = {IOS Press},
+  series    = {Frontiers in Artificial Intelligence and Applications},
+  volume    = {245},
+  year      = {2012},
+  isbn      = {978-1-61499-110-6},
+  ee        = {http://www.booksonline.iospress.nl/Content/View.aspx?piid=32171},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+
+
+@article{HabliK09,
+  author    = {Ibrahim Habli and
+               Tim Kelly},
+  title     = {A Generic Goal-Based Certification Argument for the Justification
+               of Formal Analysis},
+  journal   = {Electr. Notes Theor. Comput. Sci.},
+  volume    = {238},
+  number    = {4},
+  year      = {2009},
+  pages     = {27-39},
+  ee        = {http://dx.doi.org/10.1016/j.entcs.2009.09.004},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+
+@article{UK07,
+  author    = "UK Ministry of Defence",
+  title     = {00-56 Safety Management Requirments for Defence Systems},
+  journal   = {UK Ministry of defence},
+  volume    = {4},
+  number    = {9},
+  year      = {2007}
+  }
+
+
+@article{GraydonHHKK12,
+  author    = {Patrick J. Graydon and
+               Ibrahim Habli and
+               Richard Hawkins and
+               Tim Kelly and
+               John C. Knight},
+  title     = {Arguing Conformance},
+  journal   = {IEEE Software},
+  volume    = {29},
+  number    = {3},
+  year      = {2012},
+  pages     = {50-57},
+  ee        = {http://doi.ieeecomputersociety.org/10.1109/MS.2012.26},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+
+@article{Bench-CaponAM12,
+  author    = {T. Bench-Capon and
+               K. Atkinson and
+               P. McBurney},
+  title     = {Using argumentation to model agent decision making in economic
+               experiments},
+  journal   = {AAMAS},
+  volume    = {25},
+  number    = {1},
+  year      = {2012},
+  pages     = {183-208},
+  ee        = {http://dx.doi.org/10.1007/s10458-011-9173-6},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+
+
+@inproceedings{AtkinsonBM06,
+  author    = {K. Atkinson and
+               T. Bench-Capon and
+               S. Modgil},
+  title     = {Argumentation for Decision Support},
+  booktitle = {DEXA},
+  year      = {2006},
+  pages     = {822-831},
+  ee        = {http://dx.doi.org/10.1007/11827405_80},
+  crossref  = {DBLP:conf/dexa/2006},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@proceedings{DBLP:conf/dexa/2006,
+  editor    = {S. Bressan and
+               J. K{\"u}ng and
+               R. Wagner},
+  title     = {Database and Expert Systems Applications, 17th International
+               Conference, DEXA 2006, Krak{\'o}w, Poland, September
+               4-8, 2006, Proceedings},
+  booktitle = {DEXA},
+  publisher = {Springer},
+  series    = {LNCS},
+  volume    = {4080},
+  year      = {2006},
+  isbn      = {3-540-37871-5},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+
+@article{AtkinsonBM06,
+  author    = {Katie Atkinson and
+               Trevor J. M. Bench-Capon and
+               Peter McBurney},
+  title     = {PARMENIDES: Facilitating Deliberation in Democracies},
+  journal   = {Artif. Intell. Law},
+  volume    = {14},
+  number    = {4},
+  year      = {2006},
+  pages     = {261-275},
+  ee        = {http://dx.doi.org/10.1007/s10506-006-9001-5},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+
+@inproceedings{WeideDMPV11,
+  author    = {T. van der Weide and
+               F. Dignum and
+               J.Ch. Meyer and
+               H. Prakken and
+               G. Vreeswijk},
+  title     = {Multi-criteria argument selection in persuasion dialogues},
+  booktitle = {AAMAS},
+  year      = {2011},
+  pages     = {921-928},
+    crossref  = {DBLP:conf/atal/2011},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@proceedings{DBLP:conf/atal/2011,
+  editor    = {L. Sonenberg and
+               P. Stone and
+               K. Tumer and
+               P. Yolum},
+  title     = {10th International Conference on Autonomous Agents and Multiagent
+               Systems (AAMAS 2011), Taipei, Taiwan, May 2-6, 2011, Volume
+               1-3},
+  booktitle = {AAMAS},
+  publisher = {IFAAMAS},
+  year      = {2011},
+  isbn      = {978-0-9826571-5-7},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+
+@inproceedings{ModgilP11,
+  author    = {S. Modgil and
+               H. Prakken},
+  title     = {Revisiting Preferences and Argumentation},
+  booktitle = {IJCAI},
+  year      = {2011},
+  pages     = {1021-1026},
+  ee        = {http://ijcai.org/papers11/Papers/IJCAI11-175.pdf},
+  crossref  = {DBLP:conf/ijcai/2011},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@proceedings{DBLP:conf/ijcai/2011,
+  editor    = {T. Walsh},
+  title     = {IJCAI 2011, Proceedings of the 22nd International Joint
+               Conference on Artificial Intelligence, Barcelona, Catalonia,
+               Spain, July 16-22, 2011},
+  booktitle = {IJCAI},
+  publisher = {IJCAI/AAAI},
+  year      = {2011},
+  isbn      = {978-1-57735-516-8},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+
+
+@inproceedings{NawwabBD08,
+  author    = {F. S. Nawwab and
+               T. Bench-Capon and
+               P. E. Dunne},
+  title     = {A Methodology for Action-Selection using Value-Based Argumentation},
+  booktitle = {COMMA},
+  year      = {2008},
+  pages     = {264-275},
+  ee        = {http://www.booksonline.iospress.nl/Content/View.aspx?piid=9286},
+  crossref  = {DBLP:conf/comma/2008},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@proceedings{DBLP:conf/comma/2008,
+  editor    = {P. Besnard and
+               S. Doutre and
+               A. Hunter},
+  title     = {Computational Models of Argument: Proceedings of COMMA 2008,
+               Toulouse, France, May 28-30, 2008},
+  booktitle = {COMMA},
+  publisher = {IOS Press},
+  series    = {Frontiers in Artificial Intelligence and Applications},
+  volume    = {172},
+  year      = {2008},
+  isbn      = {978-1-58603-859-5},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+
+
+@inproceedings{LetiaG08,
+  author    = {I. A. Letia and
+               A. Groza},
+  title     = {Contextual Extension with Concept Maps in the Argument Interchange
+               Format},
+  booktitle = {ArgMAS},
+  year      = {2008},
+  pages     = {72-89},
+  ee        = {http://dx.doi.org/10.1007/978-3-642-00207-6_5},
+  crossref  = {DBLP:conf/argmas/2008},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@proceedings{DBLP:conf/argmas/2008,
+  editor    = {I. Rahwan and
+               P. Moraitis},
+  title     = {Argumentation in Multi-Agent Systems, Fifth International
+               Workshop, ArgMAS 2008, Estoril, Portugal, May 12, 2008.
+               Revised Selected and Invited Papers},
+  booktitle = {ArgMAS},
+  publisher = {Springer},
+  series    = {LNCS},
+  volume    = {5384},
+  year      = {2009},
+  isbn      = {978-3-642-00206-9},
+  ee        = {http://dx.doi.org/10.1007/978-3-642-00207-6},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@INPROCEEDINGS{shankar06,
+AUTHOR = "R. Shankar and S. W. Tu and M. A. Musen",
+TITLE = "Medical Arguments in an Automated Health Care System",
+BOOKTITLE = "AAAI Spring Symposium: Argumentation for Consumers of Healthcare'06",
+PAGES = {96-104},
+YEAR = {2006}
+}
+
+@article{ReedR04,
+  author    = {C. Reed and
+               G. Rowe},
+  title     = {Araucaria: Software for Argument Analysis, Diagramming and
+               Representation},
+  journal   = {International Journal on Artificial Intelligence Tools},
+  volume    = {13},
+  number    = {4},
+  year      = {2004},
+  pages     = {983-},
+  ee        = {http://dx.doi.org/10.1142/S0218213004001922},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+
+
+@article{Tsoukias08,
+  author    = {A. Tsouki{\`a}s},
+  title     = {From decision theory to decision aiding methodology},
+  journal   = {European Journal of Operational Research},
+  volume    = {187},
+  number    = {1},
+  year      = {2008},
+  pages     = {138-161},
+  ee        = {http://dx.doi.org/10.1016/j.ejor.2007.02.039},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+
+@article{VasconcelosKN09,
+  author    = {W. Vasconcelos and
+               M. Kollingbaum and
+               T. Norman},
+  title     = {Normative conflict resolution in multi-agent systems},
+  journal   = {AAMAS},
+  volume    = {19},
+  number    = {2},
+  year      = {2009},
+  pages     = {124-152},
+  ee        = {http://dx.doi.org/10.1007/s10458-008-9070-9},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@inproceedings{TinnemeierDM10,
+  author    = {N. Tinnemeier and
+               M. Dastani and
+               J. Ch. Meyer},
+  title     = {Programming norm change},
+  booktitle = {AAMAS},
+  year      = {2010},
+  pages     = {957-964},
+  crossref  = {DBLP:conf/atal/2010},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@proceedings{DBLP:conf/atal/2010,
+  editor    = {W. van der Hoek and
+               G. Kaminka and
+               Y. Lesp{\'e}rance and
+               M. Luck and
+               S. Sen},
+  title     = {9th International Conference on Autonomous Agents and Multiagent
+               Systems (AAMAS 2010), Toronto, Canada, May 10-14, 2010,
+               Volume 1-3},
+  booktitle = {AAMAS},
+  publisher = {IFAAMAS},
+  year      = {2010},
+  isbn      = {978-0-9826571-1-9},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@article{Artemov12,
+  author    = {S. Art{\"e}mov},
+  title     = {The Ontology of Justifications in the Logical Setting},
+  journal   = {Studia Log.},
+  volume    = {100},
+  number    = {1-2},
+  year      = {2012},
+  pages     = {17-30},
+  ee        = {http://dx.doi.org/10.1007/s11225-012-9387-x},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+
+@inproceedings{Renne09,
+  author    = {B. Renne},
+  title     = {Evidence elimination in multi-agent justification logic},
+  booktitle = {TARK},
+  year      = {2009},
+  pages     = {227-236},
+  ee        = {http://doi.acm.org/10.1145/1562814.1562845},
+  crossref  = {DBLP:conf/tark/2009},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@proceedings{DBLP:conf/tark/2009,
+  editor    = {A. Heifetz},
+  title     = {Proceedings of the 12th Conference on Theoretical Aspects
+               of Rationality and Knowledge (TARK-2009), Stanford, CA,
+               USA, July 6-8, 2009},
+  booktitle = {TARK},
+  year      = {2009},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+
+@article{Reed06,
+  author    = {Chris Reed},
+  title     = {Representing dialogic argumentation},
+  journal   = {Knowl.-Based Syst.},
+  volume    = {19},
+  number    = {1},
+  year      = {2006},
+  pages     = {22-31},
+  ee        = {http://dx.doi.org/10.1016/j.knosys.2005.08.002},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+
+@TechReport{GSN11,
+title = {GSN COMMUNITY STANDARD VERSION 1},
+institution = {Origin Consulting (York) Limited},
+year = {2011}
+}
+
+@TechReport{CC10,
+author = {Ciprian Ciucu},
+title = {Rela?iile economice dintre Rom\i ania 'si Republica Moldova},
+institution = {Centrul Rom\i an de Politici Europene},
+year = {2010}
+}
+
+@article{Simon79,
+author = {{H.A}. Simon},
+title = {Rational decision making in business organisations},
+journal = {American Economic Review},
+volume = {69},
+pages = {493--513},
+year = {1979} 
+}
+
+
+@inproceedings{Walton07,
+    author = {D. Walton and D. Godden},
+    booktitle = {Dissensus and the Search for Common Ground: Proceedings of OSSA},
+    title = {Redefining Knowledge in a Way Suitable for Argumentation Theory},
+    year = {2007},
+  pages={1-11}
+}
+
+
+@inproceedings{Ouerdane09,
+    author = {Ouerdane, W. and Maudet, N. and Tsoukias, A.},
+    booktitle = {New Trends in MCDA},
+    citeulike-article-id = {7235951},
+    editor = {Figueira, J. and Greco, S. and Ehrgott, M.},
+    keywords = {arg},
+    posted-at = {2010-06-02 13:10:24},
+    priority = {0},
+    title = {Argumentation Theory and Decision Aiding},
+    year = {2009}
+}
+
+@book{Rahwan09,
+ title={Argumentation in Artificial Intelligence},
+editor={Iyad Rahwan},
+year={2009},
+publisher={Springer}

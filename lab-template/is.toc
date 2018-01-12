@@ -1,0 +1,9 @@
+\contentsline {chapter}{\numberline {1}Rules and policies}{3}{chapter.1}
+\contentsline {paragraph}{Lab organisation.}{3}{section*.2}
+\contentsline {paragraph}{Grading.}{3}{section*.3}
+\contentsline {paragraph}{Plagiarism.}{5}{section*.4}
+\contentsline {paragraph}{Class attendance.}{5}{section*.5}
+\contentsline {chapter}{\numberline {2}A1: Search}{6}{chapter.2}
+\contentsline {chapter}{\numberline {3}A2: Logics}{7}{chapter.3}
+\contentsline {chapter}{\numberline {4}A3: Planning}{8}{chapter.4}
+\contentsline {chapter}{\numberline {A}Your original code}{10}{appendix.A}

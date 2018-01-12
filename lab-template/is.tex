@@ -1,0 +1,54 @@
+\documentclass[a4paper,12pt]{report}
+\usepackage{algorithmic}
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\usepackage[margin=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{listings} 
+\usepackage{graphicx} 
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{hyperref}
+%\usepackage{mdframed}
+
+\newcommand{\currentdata}{2.01.2018}
+\newtheorem{example}{Example}
+
+\begin{document}
+\vspace{-5cm}
+\begin{center}
+Department of Computer Science\\
+Technical University of Cluj-Napoca\\
+\includegraphics[width=10cm]{fig/footer}
+\end{center}
+\vspace{1cm}
+%\maketitle
+\begin{center}
+\begin{Large}
+ \textbf{– Proiectare cu Microprocesoare\\
+Robot multifunctional
+}\\
+\end{Large}
+\vspace{3cm}
+Name:Brincoveanu Vasile-Vlad\\
+Ghiurca Dorin\\
+Group:30233\\
+Email:gg.vladbrincoveanu@gmail.com\\
+\vspace{12cm}
+\end{center}
+
+\tableofcontents
+
+\chapter{Introducere}
+
+\input{introducere}
+\chapter{Detalii de implementare}
+
+\input{implementar}
+
+\chapter{Dezvoltari ulterioare - Concluzii}
+\input{dezvoltari}
+\chapter{Referinte}
+\input{referinte}
+%\input{mycode}
+
+\end{document}

@@ -1,0 +1,448 @@
+
+\begin{verbatim}[fontsize=\small]
+\item{nod}
+class Nod:
+
+    def __init__(self, stare, actiune, cost, parent):
+        self.stare = stare
+        self.actiune = actiune
+        self.cost = cost
+        self.parent = parent
+
+    def getStare(self):
+        return self.stare
+
+    def getActiune(self):
+        return self.actiune
+
+    def getCost(self):
+        return self.cost
+
+    def setParent(self, parent):
+        self.parent = parent
+
+    def setActiune(self, actiune):
+        self.actiune = actiune
+
+    def getParent(self):
+        return self.parent
+
+\item{dfs}
+
+ nod = Nod(problem.getStartState(), 0, 0, None) 
+#initializam nodul cu contructorul clasei
+    my_stack = util.Stack() # initializam stacul
+    visited = [] # lista pentru nodurile vizitate
+    directii = [] # lista ce o vom returna la final cu directiile
+    print nod.getStare()
+    my_stack.push(nod) #adaugam nodul de inceput
+    while not my_stack.isEmpty():
+        nod = my_stack.pop() # scoatem cate un nod din stack
+        if problem.isGoalState(nod.getStare()):
+            # va intra numai daca nodul scos a ajuns la gol
+            #si va parcurge de la nodul gol pana la primul 
+	#nod cu ajutorul referintei la parinte
+            #fiecare nod, adaugandu-i directiile in lista de directii
+            while nod.getStare() != problem.getStartState():
+                print nod.getStare()
+                directii.insert(0, nod.getActiune())
+                nod = nod.getParent()
+            return directii
+        #dupa ce am scos nodul din frontiera
+        # noastra(stack) il adaugam la vizitate
+        visited.append(nod.getStare())
+        for vecini in problem.getSuccessors(nod.getStare()):
+            #ii vom explora vecinii nodului curent, adaugandu-i in frontiera
+            #nodul adaugat este scos primul la urmatoarea iteratie
+            #il vom adauga numai daca nu a mai fost in visited sau frontiera
+            nod2 = Nod(vecini[0], vecini[1], 0, nod)
+            if nod2.getStare() not in visited:
+                if nod2 not in my_stack.list:
+                        my_stack.push(nod2)
+            else:
+            #daca nodul este in vizitate il cautam si ii reactualizam 
+	 #parintele cat si actiunea
+            #alfel la rezzultatul final ar sari peste unele noduri itermediare
+	 # daca s-a ajuns la gol
+            # A->G
+            # \   |
+            # B ->D
+            #in exemplul de sus, dfs pune in vizited A,B,D, il gaseste pe G 
+	 #si ii seteaza parintele cu A
+            #el va returna A->G ca si soltuie, dar drumul corect parcurs 
+	 #este A->B->D->G,
+                for celula in my_stack.list:
+                    if nod2.getStare() == celula.getStare():
+                        celula.setParent(nod)
+                        celula.setActiune(nod2.getActiune())
+
+\item{bfs}
+
+  nod = Nod(problem.getStartState(), 0, 0, None)
+    my_queue = util.Queue()
+    visited = []
+    directii = []
+
+    my_queue.push(nod) 
+   # diferenta dintre bfs, si dfs la implementare  
+   #este ca vom folosi o coada in loc de stiva
+    while not my_queue.isEmpty():
+        nod = my_queue.pop()
+        if problem.isGoalState(nod.getStare()):
+            while nod.getStare() != problem.getStartState():
+                print nod.getStare(), problem.getStartState()
+                directii.insert(0, nod.getActiune())
+                nod = nod.parent
+            return directii
+        visited.append(nod.getStare())
+        for vecini in problem.getSuccessors(nod.getStare()):
+            nod2 = Nod(vecini[0], vecini[1], 0, nod)
+            #se descopera un vecin si daca nu e in 
+	  #vizited se va cauta sa nu fie in frontiera
+            #apoi se va adauga, nu mai este nevoie de
+	# reimprospatarea parintelui si a directiei
+            #ca la dfs, deoarece algoritmul va vizita toate 
+	#nodurile vecine a nodului curent, iar
+            #mai apoi va trece la nivelul inferior
+            if vecini[0] not in visited:
+                gasit = 0
+                for celula in my_queue.list:
+                    if celula.getStare() == nod2.getStare():
+                        gasit = 1
+                        break
+                if not gasit:
+                    my_queue.push(nod2)
+
+\item{ucs}
+
+ nod = Nod(problem.getStartState(), 0, 0, None)
+    my_priority_queue = util.PriorityQueue()
+    visited = []
+    directii = []
+    my_priority_queue.push(nod, nod.getCost()) 
+# vom folosi o coada de prioritati pentru a arata care drumuri sunt
+                                                #mai prioritare, mai ieftine
+
+    while not my_priority_queue.isEmpty():
+        nod = my_priority_queue.pop()
+        if problem.isGoalState(nod.getStare()):
+            while nod.getStare() != problem.getStartState():
+                directii.insert(0, nod.getActiune())
+                nod = nod.parent
+            return directii
+        if nod.getStare() not in visited:
+            visited.append(nod.getStare())
+            for vecini in problem.getSuccessors(nod.getStare()):
+                nod2 = Nod(vecini[0], vecini[1], nod.getCost() + vecini[2], nod)
+                gasit = 0
+                #daca copilul nu este in visited, il vom adauga,
+	      # impreuna cu costul de a ajunge acolo
+                #format din costul de pana acum + costul copilului
+                if vecini[0] not in visited:
+                    my_priority_queue.push(nod2, nod2.getCost())
+                #daca se va gasi un traseu mai ieftin, nodului 
+	     #curent ii se vor actualiza informatiile
+                #plus costul corespunzator
+                    if nod.getCost() < nod2.getCost():
+                       for celula in my_priority_queue.heap:
+                           if celula[2].getStare() == nod2.getStare():
+                               gasit = 1
+                       if gasit:
+                           my_priority_queue.update(nod2, nod2.getCost())
+
+\item{astar}
+
+ my_priority_queue = util.PriorityQueue()
+    contor = 0
+    nod = Nod(problem.getStartState(), 0, 0, None)
+    visited = []
+    directii = []
+    euristica = heuristic(nod.getStare(), problem)
+ #se va adauga euristica, care cere ca si parametrii starea
+ # si problema, euristica poate fi manhattan, euclidian ,ori 
+# o euristica implementata de noi
+    contor += 1
+    print contor
+    my_priority_queue.push(nod, nod.getCost() + euristica)
+    while not my_priority_queue.isEmpty():
+        nod = my_priority_queue.pop()
+        if problem.isGoalState(nod.getStare()):
+            while nod.getStare() != problem.getStartState():
+                directii.insert(0, nod.getActiune())
+                nod = nod.parent
+            return directii
+        if nod.getStare() not in visited:
+            visited.append(nod.getStare())
+            for vecini in problem.getSuccessors(nod.getStare()):
+                nod2 = Nod(vecini[0], vecini[1], nod.getCost() + vecini[2], nod)
+                euristica = heuristic(nod2.getStare(), problem)
+                contor += 1
+                print contor
+                gasit = 0
+                if nod2.getStare() not in visited:
+                    #se va adauga la costul nodului curent si euristica
+                    my_priority_queue.push(nod2, nod2.getCost() + euristica)
+                    # daca se va gasi un traseu mai ieftin,
+	          # nodului curent ii se vor actualiza informatiile
+                    # plus costul corespunzator
+                    if nod.getCost() < nod2.getCost():
+                        for celula in my_priority_queue.heap:
+                            if celula[2].getStare() == nod2.getStare():
+                                gasit = 1
+                                break
+                        if gasit:
+                            my_priority_queue.update(nod2, nod2.getCost() + euristica)
+
+\item{corners}
+
+ def __init__(self, startingGameState):
+       # self.walls = startingGameState.getWalls()
+        #self.startingPosition = startingGameState.getPacmanPosition()
+        #top, right = self.walls.height-2, self.walls.width-2
+       # self.corners = list(((1, 1), (1, top), (right, 1), (right, top)))
+        #for corner in self.corners:
+          #  if not startingGameState.hasFood(*corner):
+            #    print 'Warning: no food in corner ' + str(corner)
+       # self._expanded = 0 # DO NOT CHANGE; Number of search nodes expanded
+
+        #verificam daca starea initiala nu este deja intr-un colt,
+        #si daca este, stergem pozitia din lista de colturi
+        if self.startingPosition in self.corners:
+            self.corners.remove(self.startingPosition)
+        # print self.startingPosition, self.corners[0], 
+       #self.corners[1], self.corners[2], self.corners[3]
+
+    def getStartState(self):
+        #nu vom returna doar starea, dar si lista
+       # de colturi pentru implementariile viitoare
+        return self.startingPosition, self.corners
+
+    def isGoalState(self, state):
+        """
+        Returns whether this search state is a goal state of the problem.
+        """
+        #vom verifica daca lista de colturi a starii nodului este nula
+        #daca nu este, inseamna ca vor mai fi colturi in care pacmanul
+        #trebuie sa le viziteze
+        stare, corners = state
+        if len(corners) > 0:
+            return False
+        else:
+            return True
+
+    def getSuccessors(self, state):
+        """
+        Returns successor states, the actions they require, and a cost of 1.
+
+         As noted in search.py:
+            For a given state, this should return a list of triples, (successor,
+            action, stepCost), where 'successor' is a successor to the current
+            state, 'action' is the action required to get there, and 'stepCost'
+            is the incremental cost of expanding to that successor
+        """
+
+       # successors = []
+        #for action in [Directions.NORTH, Directions.SOUTH, Directions.EAST, Directions.WEST]:
+           # stare, corners = state
+            #corners1 = list(corners)
+            #x,y = stare
+           # dx, dy = Actions.directionToVector(action)
+            #nextx = int(x + dx)
+            #nexty = int(y + dy)
+            #hitsWall = self.walls[nextx][nexty]
+            nextNod = (nextx, nexty)
+            #verificam daca nu loveste un zid, iar mai apoi verificam
+            #daca pozitia viitoare va fi un colt, daca da il vom sterge
+            #din lista de colturi, iar mai apoi vom returna sucesorul
+            #cu lista modificata, sau nu, sub forma de 
+	#tupla(pozitie,lista de corner),actiune,cost)
+            if not hitsWall:
+                if nextNod in corners:
+                    corners1.remove(nextNod)
+                successors.append(((nextNod, corners1), action, 1))
+
+        self._expanded += 1 # DO NOT CHANGE
+        return successors
+
+\item{Q6}
+
+ if problem.isGoalState(state): 
+#if the position is one of teh corners heuristic function
+# should return 0 for consistency
+         return 0
+
+    visited = list(state[1]) # the list of remaining corners to visited of the node
+    pozitie = state[0] # the position of the node
+    i = 0
+    costul_total = 0 # total cost...
+
+    #we will find the minimum corner from the current position
+    #using minimumCorner() function which will search throw all the
+    #corners are calculate the aprox distance using manhattanDistance
+    #then it will return that corner from which we will add it's manhattanDist
+    #with the current position to the total cost of the heuristic
+    # then we will remove the corner from the list and we will recall the minimumCorner
+    #function with this corner and the remaining corners to find the 
+     #closest corner to this one
+    for i in range(0, len(visited)):
+        index = minimumCorner(pozitie, visited)
+        xy0 = int(pozitie[0] - index[0])
+        xy1 = int(pozitie[1] - index[1])
+        costul_total += abs(xy0) + abs(xy1)
+        pozitie = index
+        visited.remove(index)
+    return costul_total #Heuristic resulted in expansion of 1186 nodes
+
+    #return len(list(state[1])) -- 
+   #simplest heuristic  path length: 106  Heuristic resulted in expansion of 1908 nodes
+
+    #return util.manhattanDistance(pozitie,minimumCorner(pozitie,visited))
+    # path length: 106  Heuristic resulted in expansion of 1475 nodes
+
+def minimumCorner(pozitie, corner):
+    minNod = None
+    minDist = 9999999999
+    i = 0
+    while i < len(corner):
+        #dist = util.manhattanDistance(pozitie, corner[i])
+        # print "LUNG", len(corners)
+        # print "Pozitie ", poz, "Coners ", corners[i]
+        # (xy1[0] - xy2[0]) ** 2 + (xy1[1] - xy2[1]) ** 2 ) ** 0.5 # euclidian
+        xy0 = int(pozitie[0] - corner[i][0]) #manhattan
+        xy1 = int(pozitie[1] - corner[i][1])
+        dist = abs(xy0) + abs(xy1)
+        if minDist > dist:
+            minDist = dist
+            minNod = corner[i]
+        i += 1
+    return minNod
+
+\item{Q7}
+
+position, foodGrid = state
+    "*** YOUR CODE HERE ***"
+    food = list(foodGrid.asList())
+    costul_total = 0
+    pozitie = position
+    i = 0
+    if problem.isGoalState(state): # verify that the problem is goal state
+        return 0
+    while i < len(food):
+        #print "AA"
+        index = minimDistanceFood(pozitie, food)
+        #print "Min food ", index
+        xy0 = int(pozitie[0] - index[0])
+        xy1 = int(pozitie[1] - index[1])
+        costul_total += abs(xy0) + abs(xy1)
+        #print costul_total
+        pozitie = index
+        food.remove(index)
+        i += 1
+    return costul_total #8881
+
+    # a = util.manhattanDistance(pozitie, minimDistanceFood(pozitie, food))
+    # if a < 3:
+    #     costul_total = (a + len(food) )/2
+    # return costul_total
+
+    #return util.manhattanDistance(pozitie, minimDistanceFood(pozitie, food)) 13898
+    #return len(food) 12517
+
+def minimDistanceFood(pozitie, food):
+
+    minNod = None
+    minDist = 999999999
+    i = 0
+    while i < len(food):
+        xy0 = int(pozitie[0] - food[i][0])
+        xy1 = int(pozitie[1] - food[i][1])
+        dist = abs(xy0) + abs(xy1)
+        if minDist > dist:
+            minDist = dist
+            minNod = food[i]
+        i += 1
+    return minNod
+
+\item{propositional logic and fol}
+
+exists x tehnician(x) -> human(x).      %declare the existance of the jobs
+exists x consultant(x) -> human(x).     % and each job practicant is also human 
+exists x planner(x) -> human(x).
+exists x engineer(x) -> human(x).
+exists x nutritionist(x) -> human(x).
+
+human(a).               %axioms declaring all five persons that are humans
+human(b). 
+human(c).
+human(d).
+human(e).
+
+younger(e,c).  		% axioms declaring the known information regarding age 
+younger(c,b). 		%comparison between the humans
+younger(d,a).
+younger(b,d).
+
+%here we say that if humans are doing a profesion they can not do another
+ %profesion in other words professions are unique to each humans
+
+all x (tehnician(x) <-> -consultant(x) & -planner(x) & -enginner(x) & -nutritionist(x)).
+all x (consultant(x) <-> -tehnician(x) & -planner(x) & -enginner(x) & -nutritionist(x)).
+all x (planner(x) <-> -tehnician(x) & -consultant(x) & -enginner(x) & -nutritionist(x)).
+all x (engineer(x) <-> -tehnician(x) & -planner(x) & -consultant(x) & -nutritionist(x)).
+all x (nutritionist(x) <-> -tehnician(x) & -planner(x) & -enginner(x) & -consultant(x)).
+
+%if human(x) is a profession than the others can not be the same profession aswell
+% there are no 2 humans with the same profession (given in the text info)
+consultant(a) <-> -consultant(b) & -consultant(c) & -consultant(d) & -consultant(e).
+tehnician(c) <-> -tehnician(b) & -tehnician(a) & -tehnician(d) & -tehnician(e).
+tehnician(d) <-> -tehnician(b) & -tehnician(c) & -tehnician(a) & -tehnician(e).
+engineer(d) <-> -engineer(b) & -engineer(c) & -engineer(a) & -engineer(e).
+planner(c) <-> -planner(b) & -planner(a) & -planner(d) & -planner(e).
+planner(d) <-> -planner(b) & -planner(c) & -planner(a) & -planner(e).
+nutritionist(e) <-> -nutritionist(b) & -nutritionist(c) & -nutritionist(d) & -nutritionist(a).
+
+%we are saying that any person who is younger than someone else can not be a
+ %consultant because consultant is the oldest of them all.(some helping hand
+ %for mace4 to find the solution)
+all x (all y (younger(x,y) -> -consultant(x))).
+%we are saying that any 
+%all x (-engineer(x) & -enginner(d) & -consultant(x) -> younger(x,b)).
+%any human who is older than human(b) can be an engineer or an consultant
+%(given to help mace4 find the solution).
+all x (younger(b,x) & -engineer(d) -> engineer(x) | consultant(x)).
+all x (younger(x,d) -> planner(x) | nutritionist(x) | tehnician(x)).
+%any engineer is older than human(b) which also implies that b can not be 
+%an engineer 
+all x (engineer(x) & -engineer(b) -> younger(b,x)).
+%any planner is younger than any tehnician(given in the text info)
+all x (planner(x) & tehnician(y) -> younger(x,y)).
+%any nutritionist is younger than any planner(given in the text info)
+all x (nutritionist(x) & planner(y) -> younger(x,y)).
+
+\item{arithmetic library}
+
+list(distinct).
+[consultant,tehnician,planner,engineer,nutritionist].
+[a,b,c,d,e].
+end_of_list.
+
+x < y <-> younger(x,y).
+x > y <-> older(x,y).
+
+younger(tehnician,consultant) & 
+younger(nutritionist,consultant) &
+younger(planner,consultant) & 
+younger(engineer,consultant).
+
+older(engineer,tehnician).
+older(tehnician,planner).
+older(planner,nutritionist).
+
+younger(e,c).
+younger(c,b).
+younger(d,a).
+younger(b,d).
+
+\end{verbatim}
+
+
