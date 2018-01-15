@@ -2,6 +2,10 @@
 \begin{itemize}
 \item
 	\tab Proiectul facut se bazeaza pe comunicarea dintre cele 2 placi , Mega si Uno. Folosind modulul de comunicare i2c descris la inceput se realizeaza o conexiune master-slave intre cele 2 placi, master fiind MEGA, cu toata logica din spate, iar UNO find slave executand comenzi primite de la MEGA.\\
+	\tab Diagrama de flowchart este urmatoarea.\\
+	\begin{center}
+	\includegraphics[scale=0.5]{flow.png}\\
+	\end{center}
 	\tab\tab \bf{Prima parte - modulul "slave" UNO)}\\
 	\tab Uno contine codul pentru a rula motoarele servo si cele pentru roti. Motorul servo este folosit pentru a misca cu precizie un sonar ce este instalat peste el. Acest sonar citeste distantele folosind unde pe care le transmite si le receptioneaza, exact cum functioneaza si un liliac, si, din diferenta de timp dintre transmisie si receptia undei, se va calcula distanta din fata lui. Codul de miscare pentru servo este urmatorul.\\
 	\begin{verbatim}
@@ -129,7 +133,7 @@ void move_right(){
 }
 	\end{verbatim}
 
-	\tab Functia de receptie a datelor transmise de Mega catre Uno. Se va folosi o coada pentru a stoca comenzile primite de la Uno astfel , pana executa o comanda, el va memora celelalte primite si le va executa pe rand in ordine, fara sa piarda vreo comanda.\footnote{Libraria de queue.h este luata de pe site-ul de la arduino}.
+	\tab Functia de receptie a datelor transmise de Mega catre Uno. Se va folosi o coada in Uno ,pentru a stoca comenzile primite de Mega astfel : pana executa o comanda, el va memora celelalte primite si le va executa pe rand in ordine, fara sa piarda vreo comanda.\footnote{Libraria de queue.h este luata de pe site-ul de la arduino}.
 	\begin{verbatim}
 		// Atasam o functie care sa se declanseze atunci cand primim ceva
  		Wire.onReceive(receiveEvent); // in setup
